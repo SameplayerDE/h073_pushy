@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/ball.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/floor.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/Font.spritefont</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_1.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_10.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_11.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_12.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_13.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_14.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_15.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_16.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_2.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_3.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_4.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_5.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_6.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_7.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_8.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/laser/laser_9.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/missing.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/pushy.png</File>
+    <File>C:/Users/asame/RiderProjects/h073_pushy/h073_pushy/Content/wall.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
