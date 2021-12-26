@@ -15,6 +15,9 @@ namespace h073_pushy
         private Direction _direction = Direction.Up;
         private Stage _stage = null;
 
+        public int X => _position.X;
+        public int Y => _position.Y;
+        
         public Pushy(Stage stage)
         {
             _stage = stage;

@@ -8,7 +8,9 @@ namespace editor
         [STAThread]
         static void Main(string[] args)
         {
-            Mutex mutex = new System.Threading.Mutex(false, System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location));
+            using (var game = new Game1())
+                game.Run();
+            /*Mutex mutex = new System.Threading.Mutex(false, System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location));
             try
             {
                 if (mutex.WaitOne(0, false))
@@ -29,7 +31,7 @@ namespace editor
                     mutex.Close();
                     mutex = null;
                 }
-            }
+            }*/
             
         }
     }

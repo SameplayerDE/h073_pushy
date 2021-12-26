@@ -16,6 +16,11 @@ namespace h073_pushy
 
         private bool[,] _walls;
 
+        public Pushy Pushy => _pushy;
+        public int  Width => _width;
+        public int  Height => _height;
+        public Camera Camera;
+
         public Stage(int w, int h, int startX = 0, int startY = 0)
         {
             _pushy = new Pushy(this);
@@ -139,6 +144,7 @@ namespace h073_pushy
             {
                 _balls[i].Update(gameTime);
             }
+            Camera.Teleport(Pushy.X * 32, Pushy.Y * 32);
         }
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

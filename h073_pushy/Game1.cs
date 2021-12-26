@@ -1,4 +1,7 @@
-﻿using HxInput;
+﻿using System;
+using System.Windows.Forms;
+using HxInput;
+using HxSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +12,7 @@ namespace h073_pushy
 
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Camera _camera;
 
         private Stage _stage;
 
@@ -23,9 +27,12 @@ namespace h073_pushy
 
         protected override void Initialize()
         {
-            //_stage = new Stage(10, 10, 4, 4);
             
+            Hx.Instance.Init(this, _graphics, Framework.DesktopGL);
+      
+            _camera = new Camera(_graphics);
             _stage = StageLoader.LoadFromFile("stagexxx.stage");
+            _stage.Camera = _camera;
             
             base.Initialize();
         }
@@ -46,9 +53,8 @@ namespace h073_pushy
             {
                 return;
             }
-            
-            Input.Instance.Update(gameTime);
-            
+            Hx.Instance.Update(gameTime);
+
             _stage.Update(gameTime);
 
             base.Update(gameTime);
@@ -64,7 +70,7 @@ namespace h073_pushy
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
             _stage.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
