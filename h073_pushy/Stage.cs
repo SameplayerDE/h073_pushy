@@ -9,8 +9,10 @@ namespace h073_pushy
 
         private Pushy _pushy;
         private List<Ball> _balls;
+        private List<Parser> _parsers;
         private readonly int _width;
         private readonly int _height;
+        private Point _end;
 
         private bool[,] _walls;
 
@@ -18,9 +20,7 @@ namespace h073_pushy
         {
             _pushy = new Pushy(this);
             _balls = new List<Ball>();
-
-           
-            
+            _parsers = new List<Parser>();
             _pushy.Teleport(startX, startY);
             _walls = new bool[w, h];
             _width = w;
@@ -49,11 +49,32 @@ namespace h073_pushy
             return true;
         }
         
+        public bool AddParser(int x, int y, Color color)
+        {
+            if (x < 0 || x >= _width || y < 0 || y >= _height) return false;
+            if (IsBlocked(x, y)) return false;
+            
+            var parser = new Parser(this);
+            parser.SetColor(color);
+            parser.Teleport(x, y);
+            _parsers.Add(parser);
+            
+            return true;
+        }
+        
         public bool SetStart(int x, int y)
         {
             if (x < 0 || x >= _width || y < 0 || y >= _height) return false;
             if (IsBlocked(x, y)) return false;
             _pushy.Teleport(x, y);
+            return true;
+        }
+        
+        public bool SetEnd(int x, int y)
+        {
+            if (x < 0 || x >= _width || y < 0 || y >= _height) return false;
+            if (IsBlocked(x, y)) return false;
+            _end = new Point(x, y);
             return true;
         }
         
@@ -82,6 +103,19 @@ namespace h073_pushy
             return false;
         }
         
+        public bool IsParser(int x, int y)
+        {
+            for (var i = _parsers.Count - 1; i >= 0; i--)
+            {
+                if (_parsers[i].Position.X == x && _parsers[i].Position.Y == y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         public Ball GetMovable(int x, int y)
         {
             for (var i = _balls.Count - 1; i >= 0; i--)
@@ -97,6 +131,10 @@ namespace h073_pushy
         public void Update(GameTime gameTime)
         {
             _pushy.Update(gameTime);
+            for (var i = _parsers.Count - 1; i >= 0; i--)
+            {
+                _parsers[i].Update(gameTime);
+            }
             for (var i = _balls.Count - 1; i >= 0; i--)
             {
                 _balls[i].Update(gameTime);
@@ -114,11 +152,17 @@ namespace h073_pushy
                 }
             }
             
-            _pushy.Draw(spriteBatch, gameTime);
+            spriteBatch.Draw(TextureContentLoader.Instance.Request("house").Result, _end.ToVector2() * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            for (var i = _parsers.Count - 1; i >= 0; i--)
+            {
+                _parsers[i].Draw(spriteBatch, gameTime);
+            }
             for (var i = _balls.Count - 1; i >= 0; i--)
             {
                 _balls[i].Draw(spriteBatch, gameTime);
             }
+            _pushy.Draw(spriteBatch, gameTime);
+            
             
         }
         

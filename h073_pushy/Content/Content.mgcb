@@ -44,6 +44,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
 
+#begin house.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:house.png
+
 #begin laser/laser_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -247,6 +259,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:missing.png
+
+#begin parser.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:parser.png
 
 #begin pushy.png
 /importer:TextureImporter

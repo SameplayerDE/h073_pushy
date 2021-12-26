@@ -25,6 +25,8 @@ namespace h073_pushy
             var start = Point.Zero;
             var end = Point.Zero;
             var movables = new List<Point>();
+            var parser = new List<Point>();
+            var color = new List<Color>();
 
             for (var y = 0; y < height; y++)
             {
@@ -43,6 +45,11 @@ namespace h073_pushy
                         end.X = x;
                         end.Y = y;
                     }
+                    if (element.Equals('ö'))
+                    {
+                        parser.Add(new Point(x, y));
+                        color.Add(Color.Red);
+                    }
                     if (element.Equals('c'))
                     {
                         movables.Add(new Point(x, y));
@@ -51,9 +58,14 @@ namespace h073_pushy
             }
 
             stage.SetStart(start.X, start.Y);
+            stage.SetEnd(end.X, end.Y);
             foreach (var movable in movables)
             {
                 stage.AddMovable(movable.X, movable.Y);
+            }
+            foreach (var par in parser)
+            {
+                stage.AddParser(par.X, par.Y, Color.Red);
             }
             return stage;
         }

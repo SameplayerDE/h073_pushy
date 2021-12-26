@@ -7,7 +7,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace h073_pushy
 {
-    public class Ball
+    public class Parser
     {
         private string _textureKey;
         private Texture2D _texture = null;
@@ -18,14 +18,19 @@ namespace h073_pushy
         private Direction _direction = Direction.Up;
 
         public Point Position => _position;
-        public Color Color => _color;
 
         private Stage _stage = null;
 
-        public Ball(Stage stage)
+        public Parser(Stage stage)
         {
             _stage = stage;
-            _textureKey = "ball";
+            _textureKey = "parser";
+            _request = TextureContentLoader.Instance.Request(_textureKey);
+        }
+
+        public bool Check(Ball ball)
+        {
+            return ball.Color == _color;
         }
         
         public void Teleport(Point amount)
@@ -54,14 +59,6 @@ namespace h073_pushy
                     _position.Y += y;
                     return true;
                 }
-
-                if (_stage.IsParser(_position.X + x, _position.Y + y))
-                {
-                    _position.X += x;
-                    _position.Y += y;
-                    
-                    return true;
-                }
             }
 
             return false;
@@ -75,7 +72,16 @@ namespace h073_pushy
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            if (_request.Success == false)
+            {
+                return;
+            }
             spriteBatch.Draw(_request.Result, _position.ToVector2() * 32f, null, _color, _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+        }
+
+        public void SetColor(Color color)
+        {
+            _color = color;
         }
     }
 }
