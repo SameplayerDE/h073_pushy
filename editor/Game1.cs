@@ -9,6 +9,7 @@ namespace editor
 
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Camera _camera;
         
         public Game1()
         {
@@ -21,7 +22,7 @@ namespace editor
 
         protected override void Initialize()
         {
-
+            _camera = new Camera();
             base.Initialize();
         }
 
@@ -55,6 +56,11 @@ namespace editor
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //scene
+            _spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(_camera.Position));
+            _spriteBatch.End();
+
+            //ui
             _spriteBatch.Begin();
             _spriteBatch.End();
             
