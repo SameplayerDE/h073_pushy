@@ -54,14 +54,6 @@ namespace h073_pushy
                     _position.Y += y;
                     return true;
                 }
-
-                if (_stage.IsParser(_position.X + x, _position.Y + y))
-                {
-                    _position.X += x;
-                    _position.Y += y;
-                    
-                    return true;
-                }
             }
 
             return false;
