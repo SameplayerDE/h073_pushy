@@ -88,24 +88,7 @@ namespace editor
             
             //Render Selection
             spriteBatch.Draw("p_w", _selectionRectangle, CColor.DarkC);
-            for (int y = 0; y < 100;)
-            {
-                for (int i = 0; i < 100; i++)
-                {
-                    var rect = new Rectangle(8 + i * 32 + 16 * i, 8 + 32 * y, 32, 32);
-                    if (_selectionRectangle.Contains(rect))
-                    {
-                        spriteBatch.Draw("p_w", rect, CColor.DarkC);
-                        spriteBatch.Draw("icons/save", rect, CColor.Dark);
-                        spriteBatch.DrawString($"{i}:{y}", "default", rect.Location.ToVector2(), 0.5f, CColor.BrightC);
-                    }
-                    else
-                    {
-                        y++;
-                        break;
-                    }
-                }
-            }
+            
         }
 
     }
