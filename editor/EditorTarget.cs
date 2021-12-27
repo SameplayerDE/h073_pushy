@@ -76,6 +76,102 @@ namespace editor
             
             _drawMouse = area.Contains(_tranformedMouse);
 
+            float tilesetW = _width * 32 * _camera.Scale;
+            float tilesetH = _height * 32 * _camera.Scale;
+            
+            Matrix m = Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position);
+            float areaX = Math2D.Transform(new Vector2(0, 0), m).X, areaY = Math2D.Transform(new Vector2(0, 0), m).Y;
+            float camX = Math2D.Transform(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), m).X, camY = Math2D.Transform(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), m).Y;
+
+            if (tilesetH > (_graphicsDevice.Viewport.Height / 2)) //area is bigger
+            {
+                if (areaY + tilesetH < _graphicsDevice.Viewport.Height / 2)
+                {
+                    _camera.Move(0, areaY + tilesetH - _graphicsDevice.Viewport.Height / 2);
+                }
+                else if (areaY > (_graphicsDevice.Viewport.Height / 2))
+                {
+                    _camera.Move(0, areaY - _graphicsDevice.Viewport.Height / 2);
+                }
+            }
+            else
+            {
+                if (areaY < 0)
+                {
+                    _camera.Move(0, areaY);
+                }
+                if (areaY + tilesetH > _graphicsDevice.Viewport.Height)
+                {
+                    _camera.Move(0, areaY + tilesetH - _graphicsDevice.Viewport.Height);
+                }
+                /*if (areaX < 0 || areaY < 0)
+                {
+                    _camera.Move(areaX < 0 ? areaX : 0, areaY < 0 ? areaY : 0);
+                }
+                if (areaX + tilesetW > _graphicsDevice.Viewport.Width || areaY + tilesetH > _graphicsDevice.Viewport.Height)
+                {
+                    _camera.Move(areaX + tilesetW > _graphicsDevice.Viewport.Width ? (areaX + tilesetW - _graphicsDevice.Viewport.Width) : 0, areaY + tilesetH > _graphicsDevice.Viewport.Height ? areaY + tilesetH - _graphicsDevice.Viewport.Height : 0);
+                }*/
+            }
+
+
+            if (tilesetW > _graphicsDevice.Viewport.Width / 2)
+            {
+                if (areaX + tilesetW < _graphicsDevice.Viewport.Width / 2)
+                {
+                    _camera.Move(areaX + tilesetW - _graphicsDevice.Viewport.Width / 2, 0);
+                }
+                else if (areaX > (_graphicsDevice.Viewport.Width / 2))
+                {
+                    _camera.Move(areaX - _graphicsDevice.Viewport.Width / 2, 0);
+                }
+            }
+            else
+            {
+                if (areaX < 0)
+                {
+                    _camera.Move(areaX, 0);
+                }
+                if (areaX + tilesetW > _graphicsDevice.Viewport.Width)
+                {
+                    _camera.Move(areaX + tilesetW - _graphicsDevice.Viewport.Width, 0);
+                }
+            }
+            
+            /*if (tilesetH > (_graphicsDevice.Viewport.Height / 2)) {
+                if (y + tilesetH < (_graphicsDevice.Viewport.Height / 2)) {
+                    y = -tilesetH + (_graphicsDevice.Viewport.Height / 2);
+                }
+                else if (y > (_graphicsDevice.Viewport.Height / 2)) {
+                    y = (_graphicsDevice.Viewport.Height / 2);
+                }
+            }
+            else {
+                if (y < 0) {
+                    y = 0;
+                }
+                else if (y + tilesetH > _graphicsDevice.Viewport.Height) {
+                    y = _graphicsDevice.Viewport.Height - tilesetH;
+                }
+            }
+
+            /*if (tilesetW > (_graphicsDevice.Viewport.Width / 2)) {
+                if (x + tilesetW < (_graphicsDevice.Viewport.Width / 2)) {
+                    x = -tilesetW + (_graphicsDevice.Viewport.Width / 2);
+                }
+                else if (x > (_graphicsDevice.Viewport.Width / 2)) {
+                    x = (_graphicsDevice.Viewport.Width / 2);
+                }
+            }
+            else {
+                if (x < 0) {
+                    x = 0;
+                }
+                else if (x + tilesetW > _graphicsDevice.Viewport.Width) {
+                    x = _graphicsDevice.Viewport.Width - tilesetW;
+                }
+            }*/
+            //_camera.Teleport(x, y);
         }
         
         private void Zoom(object sender, MouseScrollWheelValueChangeEventArgs e)
@@ -84,18 +180,38 @@ namespace editor
             {
                 return;
             }
+            float oldWidth = _width * _camera.Scale;
+            float oldHeight = _height * _camera.Scale;
             switch (e.Change)
             {
                 case 120:
                     //UP
-                    _camera.ChangeScaleBy(0.1f);
+                    //_camera.ChangeScaleBy(0.1f);
+                    if (_camera.Scale < 1) {
+                        _camera.SetScale(_camera.Scale + 0.25f * 1);
+                    }
+                    else {
+                        _camera.SetScale(_camera.Scale + 0.25f * (int)_camera.Scale);
+                    }
                     break;
                 case -120:
                     //Down
-                    _camera.ChangeScaleBy(-0.1f);
+                    //_camera.ChangeScaleBy(-0.1f);
+                    if (_camera.Scale - (0.25f * (int)_camera.Scale) > 0.25f) {
+                        _camera.SetScale(_camera.Scale - 0.25f * (int)_camera.Scale);
+                    }
+                    else {
+                        _camera.SetScale(0.25f);
+                    }
                     break;
             }
-            _camera.SetScale((float) Math.Clamp(Math.Round(_camera.Scale), 0.1f, 10));
+            float newWidth = _width * _camera.Scale;
+            float newHeight = _height * _camera.Scale;
+
+            float diffWidth = (oldWidth - newWidth);
+            float diffHeight = (oldHeight - newHeight);
+            _camera.Move(diffWidth / 2, diffHeight / 2);
+            // _camera.SetScale((float) Math.Clamp(_camera.Scale, 0.1f, 10));
             //TODO change offset with zoom
             //_offset -= (_offset.ToVector2() * _zoom).ToPoint();
         }
@@ -121,11 +237,11 @@ namespace editor
             
             spriteBatch.End();
             
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
-            //spriteBatch.Draw(
-             //   TextureContentLoader.Instance.Find("missing"),
-              //  new Rectangle(new Point(0, 0), new Point(_tileWidth, _tileHeight)),
-               // null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position)); 
+            spriteBatch.Draw(
+            TextureContentLoader.Instance.Find("missing"),
+            new Rectangle(new Point((int)(_camera.RawPosition.X / _camera.Scale), (int)(_camera.RawPosition.Y / _camera.Scale)), new Point((int)(_tileWidth / _camera.Scale), (int)(_tileHeight / _camera.Scale))),
+            null, Color.White, 0f, TextureContentLoader.Instance.Find("missing").Bounds.Center.ToVector2(), SpriteEffects.None, 0f);
             
             //Mouse
             if (_drawMouse)

@@ -8,6 +8,7 @@ namespace editor
         private Vector3 _position = Vector3.Zero;
         private float _scale = 1f;
         public Vector3 Position => _position - new Vector3(_graphicsDevice.Viewport.Bounds.Center.ToVector2(), 0);
+        public Vector3 RawPosition => _position;
         public float Scale => _scale;
         
         private GraphicsDevice _graphicsDevice;
