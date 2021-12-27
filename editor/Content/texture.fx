@@ -7,12 +7,23 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
-Texture2D SpriteTexture;
+Texture2D Texture : register(t0);
 
-sampler2D SpriteTextureSampler = sampler_state
+sampler TextureSampler : register(s0)
 {
-	Texture = <SpriteTexture>;
+	Texture = (Texture);
+	MinFilter = Point; // Minification Filter
+    MagFilter = Point;// Magnification Filter
+    MipFilter = Linear; // Mip-mapping
+	AddressU = Wrap; // Address Mode for U Coordinates
+	AddressV = Wrap; // Address Mode for V Coordinates
 };
+
+int Width;
+int Height;
+float ElapsedSeconds = 0;
+float TotalSeconds = 0;
+float TotalMilliseconds = 0;
 
 struct VertexShaderOutput
 {
@@ -23,7 +34,11 @@ struct VertexShaderOutput
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-	return tex2D(SpriteTextureSampler, input.TextureCoordinates);
+    float2 calculatedUVs = input.TextureCoordinates;
+    calculatedUVs *= float2(Width, Height) / 2; //grid pattern
+    float4 textureColor = tex2D(TextureSampler, calculatedUVs);
+    
+    return textureColor;
 }
 
 technique SpriteDrawing

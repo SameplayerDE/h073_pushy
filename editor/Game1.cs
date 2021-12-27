@@ -40,7 +40,7 @@ namespace editor
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 10, 10);
+            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 32, 32);
 
             TextureContentLoader.Instance.LoadContent(Content);
             EffectContentLoader.Instance.LoadContent(Content);

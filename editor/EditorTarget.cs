@@ -43,7 +43,26 @@ namespace editor
         public void Update(GameTime gameTime)
         {
             _effect ??= EffectContentLoader.Instance.Find("texture");
-
+            
+            //_effect.Parameters["Overlay"].SetValue(TextureContentLoader.Instance.Find("grid"));
+            _effect.Parameters["Width"].SetValue(_width);
+            _effect.Parameters["Height"].SetValue(_height);
+            
+            if (_effect.Parameters["ElapsedSeconds"] != null)
+            {
+                _effect.Parameters["ElapsedSeconds"].SetValue((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+           
+            if (_effect.Parameters["TotalSeconds"] != null)
+            {
+                _effect.Parameters["TotalSeconds"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+            }
+            
+            if (_effect.Parameters["TotalMilliseconds"] != null)
+            {
+                _effect.Parameters["TotalMilliseconds"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds);
+            }
+ 
             _tranformedMouse = Math2D.InverseTransform(Input.Instance.LatestMousePosition, Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position)).ToPoint();
         }
         
@@ -79,20 +98,22 @@ namespace editor
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            _effect.Parameters["SpriteTexture"].SetValue(TextureContentLoader.Instance.Find("grid"));
-            spriteBatch.Begin(effect: _effect, samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
+            //_effect.Parameters["Texture"].SetValue(TextureContentLoader.Instance.Find("grid"));
+            
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: _effect);
 
             spriteBatch.Draw(
-                TextureContentLoader.Instance.Find("p_w"),
+                TextureContentLoader.Instance.Find("grid"),
                 new Rectangle(new Point(0, 0), new Point(_tileWidth * _width, _tileHeight * _height)),
-                null, Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            
             spriteBatch.End();
             
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
-            spriteBatch.Draw(
-                TextureContentLoader.Instance.Find("missing"),
-                new Rectangle(new Point(0, 0), new Point(_tileWidth, _tileHeight)),
-                null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            //spriteBatch.Draw(
+             //   TextureContentLoader.Instance.Find("missing"),
+              //  new Rectangle(new Point(0, 0), new Point(_tileWidth, _tileHeight)),
+               // null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
             
             //Mouse
             spriteBatch.Draw(
