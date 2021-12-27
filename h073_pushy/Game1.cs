@@ -33,6 +33,7 @@ namespace h073_pushy
             _camera = new Camera(_graphics);
             _stage = StageLoader.LoadFromFile("stagexxx.stage");
             _stage.Camera = _camera;
+            _stage.AddStageObject(new Door(5, 3));
             
             base.Initialize();
         }

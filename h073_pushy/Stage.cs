@@ -10,6 +10,7 @@ namespace h073_pushy
         private Pushy _pushy;
         private List<Ball> _balls;
         private List<Parser> _parsers;
+        private List<StageObject> _stageObjects;
         private readonly int _width;
         private readonly int _height;
         private Point _end;
@@ -24,6 +25,7 @@ namespace h073_pushy
         public Stage(int w, int h, int startX = 0, int startY = 0)
         {
             _pushy = new Pushy(this);
+            _stageObjects = new List<StageObject>();
             _balls = new List<Ball>();
             _parsers = new List<Parser>();
             _pushy.Teleport(startX, startY);
@@ -40,6 +42,12 @@ namespace h073_pushy
                     }
                 }
             }
+        }
+
+        public void AddStageObject(StageObject stageObject)
+        {
+            stageObject.SetStage(this);
+            _stageObjects.Add(stageObject);
         }
 
         public bool AddMovable(int x, int y)
@@ -90,7 +98,25 @@ namespace h073_pushy
             return true;
         }
         
+        
         public bool IsBlocked(int x, int y)
+        {
+            var result = false;
+            for (var i = _stageObjects.Count - 1; i >= 0; i--)
+            {
+                if (_stageObjects[i].Position == new Point(x, y))
+                {
+                    if (_stageObjects[i].IsBlocking)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            return IsBlockedByWall(x, y) || result;
+        }
+        
+        private bool IsBlockedByWall(int x, int y)
         {
             return _walls[x, y];
         }
@@ -144,6 +170,10 @@ namespace h073_pushy
             {
                 _balls[i].Update(gameTime);
             }
+            for (var i = _stageObjects.Count - 1; i >= 0; i--)
+            {
+                _stageObjects[i].Update(gameTime);
+            }
             Camera.Teleport(Pushy.X * 32, Pushy.Y * 32);
         }
         
@@ -167,9 +197,11 @@ namespace h073_pushy
             {
                 _balls[i].Draw(spriteBatch, gameTime);
             }
+            for (var i = _stageObjects.Count - 1; i >= 0; i--)
+            {
+                _stageObjects[i].Draw(spriteBatch, gameTime);
+            }
             _pushy.Draw(spriteBatch, gameTime);
-            
-            
         }
         
     }
