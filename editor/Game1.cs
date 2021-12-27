@@ -115,7 +115,7 @@ namespace editor
             
 
             //ui
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin();
             _userInterfaceTarget.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
