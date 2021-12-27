@@ -19,8 +19,11 @@ sampler TextureSampler : register(s0)
 	AddressV = Wrap; // Address Mode for V Coordinates
 };
 
+float4x4 MatrixTransform;
 int Width;
 int Height;
+float OffX = 0;
+float OffY = 0;
 float ElapsedSeconds = 0;
 float TotalSeconds = 0;
 float TotalMilliseconds = 0;
@@ -34,6 +37,7 @@ struct VertexShaderOutput
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
+
     float2 calculatedUVs = input.TextureCoordinates;
     calculatedUVs *= float2(Width, Height) / 2; //grid pattern
     float4 textureColor = tex2D(TextureSampler, calculatedUVs);

@@ -53,25 +53,14 @@ namespace editor
         {
             _effect ??= EffectContentLoader.Instance.Find("texture");
             
-            //_effect.Parameters["Overlay"].SetValue(TextureContentLoader.Instance.Find("grid"));
-            _effect.Parameters["Width"].SetValue(_width);
-            _effect.Parameters["Height"].SetValue(_height);
+            _effect.Parameters["Texture"].SetValue(TextureContentLoader.Instance.Find("grid"));
+            _effect.Parameters["Width"]?.SetValue(_width);
+            _effect.Parameters["Height"]?.SetValue(_height);
+            _effect.Parameters["MatrixTransform"]?.SetValue(Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
+            _effect.Parameters["ElapsedSeconds"]?.SetValue((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _effect.Parameters["TotalSeconds"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+            _effect.Parameters["TotalMilliseconds"]?.SetValue((float)gameTime.TotalGameTime.TotalMilliseconds);
             
-            if (_effect.Parameters["ElapsedSeconds"] != null)
-            {
-                _effect.Parameters["ElapsedSeconds"].SetValue((float)gameTime.ElapsedGameTime.TotalSeconds);
-            }
-           
-            if (_effect.Parameters["TotalSeconds"] != null)
-            {
-                _effect.Parameters["TotalSeconds"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
-            }
-            
-            if (_effect.Parameters["TotalMilliseconds"] != null)
-            {
-                _effect.Parameters["TotalMilliseconds"].SetValue((float)gameTime.TotalGameTime.TotalMilliseconds);
-            }
- 
             _tranformedMouse = Math2D.InverseTransform(Input.Instance.LatestMousePosition, Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position)).ToPoint();
             var area = new Rectangle(new Point(0, 0), new Point(_tileWidth * _width, _tileHeight * _height));
             
@@ -84,6 +73,16 @@ namespace editor
             float areaX = Math2D.Transform(new Vector2(0, 0), m).X, areaY = Math2D.Transform(new Vector2(0, 0), m).Y;
             float camX = Math2D.Transform(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), m).X, camY = Math2D.Transform(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), m).Y;
 
+            if (_effect.Parameters["OffX"] != null)
+            {
+                _effect.Parameters["OffX"].SetValue(areaX);
+            }
+            
+            if (_effect.Parameters["OffY"] != null)
+            {
+                _effect.Parameters["OffY"].SetValue(areaY);
+            }
+            
             if (tilesetH > (_graphicsDevice.Viewport.Height / 2)) //area is bigger
             {
                 if (areaY + tilesetH < _graphicsDevice.Viewport.Height / 2)
@@ -139,9 +138,8 @@ namespace editor
                 }
             }
             
-            var cell = 1;
-            _camera.Teleport(Math2D.Snap(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), cell).X, Math2D.Snap(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), cell).Y);
-            
+            //var cell = 1;
+            //_camera.Teleport(Math2D.Snap(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), cell).X, Math2D.Snap(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), cell).Y);
         }
         
         private void Zoom(object sender, MouseScrollWheelValueChangeEventArgs e)
@@ -196,9 +194,9 @@ namespace editor
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            //_effect.Parameters["Texture"].SetValue(TextureContentLoader.Instance.Find("grid"));
             
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: _effect);
+            //spriteBatch.Begin(effect: _effect);
 
             spriteBatch.Draw(
                 TextureContentLoader.Instance.Find("grid"),

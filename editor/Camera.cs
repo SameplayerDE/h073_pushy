@@ -23,6 +23,8 @@ namespace editor
             _position.X += x;
             _position.Y += y;
             _position.Z += z;
+            
+            _position.Round();
         }
 
         public void Move(float x, float y, float z = 0f)
@@ -30,6 +32,8 @@ namespace editor
             _position.X += x;
             _position.Y += y;
             _position.Z += z;
+            
+            _position.Round();
         }
         
         public void Teleport(float x, float y, float z = 0f)
@@ -37,6 +41,9 @@ namespace editor
             _position.X = x;
             _position.Y = y;
             _position.Z = z;
+            
+            _position.Round();
+            
         }
         
         public void ChangeScaleBy(float amount, bool rel = false)
