@@ -40,9 +40,10 @@ namespace editor
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _editorTarget = new EditorTarget(GraphicsDevice, _camera);
+            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 10, 10);
 
             TextureContentLoader.Instance.LoadContent(Content);
+            EffectContentLoader.Instance.LoadContent(Content);
             
             base.LoadContent();
         }
@@ -100,9 +101,8 @@ namespace editor
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             //scene
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
             _editorTarget.Draw(_spriteBatch, gameTime);
-            _spriteBatch.End();
+            
 
             //ui
             _spriteBatch.Begin();

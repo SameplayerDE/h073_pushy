@@ -23,6 +23,7 @@ namespace editor
         public override void LoadContent(ContentManager contentManager)
         {
             Add("missing", contentManager.Load<Texture2D>("missing"), true);
+            Add("grid", contentManager.Load<Texture2D>("grid"));
             Add("p_w", Graphics.Instance.GenerateTexture2D(2, 2, Color.White));
         }
     }

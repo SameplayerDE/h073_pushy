@@ -21,6 +21,7 @@ namespace editor
         private int _tileHeight = 32;
 
         private Point _tranformedMouse;
+        private Effect _effect; 
         
         
         public int Width => _width;
@@ -41,6 +42,8 @@ namespace editor
 
         public void Update(GameTime gameTime)
         {
+            _effect ??= EffectContentLoader.Instance.Find("texture");
+
             _tranformedMouse = Math2D.InverseTransform(Input.Instance.LatestMousePosition, Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position)).ToPoint();
         }
         
@@ -76,6 +79,16 @@ namespace editor
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            _effect.Parameters["SpriteTexture"].SetValue(TextureContentLoader.Instance.Find("grid"));
+            spriteBatch.Begin(effect: _effect, samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
+
+            spriteBatch.Draw(
+                TextureContentLoader.Instance.Find("p_w"),
+                new Rectangle(new Point(0, 0), new Point(_tileWidth * _width, _tileHeight * _height)),
+                null, Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            spriteBatch.End();
+            
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
             spriteBatch.Draw(
                 TextureContentLoader.Instance.Find("missing"),
                 new Rectangle(new Point(0, 0), new Point(_tileWidth, _tileHeight)),
@@ -86,7 +99,7 @@ namespace editor
                 TextureContentLoader.Instance.Find("p_w"),
                 new Rectangle(Math2D.Snap(_tranformedMouse, _tileHeight).ToPoint(), new Point(_tileWidth, _tileHeight)),
                 null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
-            
+            spriteBatch.End();
         }
     }
 }
