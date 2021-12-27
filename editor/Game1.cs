@@ -108,14 +108,14 @@ namespace editor
                 return;
             }
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(CColor.Dark);
 
             //scene
             _editorTarget.Draw(_spriteBatch, gameTime);
             
 
             //ui
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _userInterfaceTarget.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             

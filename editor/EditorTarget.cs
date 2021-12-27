@@ -4,6 +4,7 @@ using HxInput.Events;
 using HxMath;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace editor
 {
@@ -138,40 +139,9 @@ namespace editor
                 }
             }
             
-            /*if (tilesetH > (_graphicsDevice.Viewport.Height / 2)) {
-                if (y + tilesetH < (_graphicsDevice.Viewport.Height / 2)) {
-                    y = -tilesetH + (_graphicsDevice.Viewport.Height / 2);
-                }
-                else if (y > (_graphicsDevice.Viewport.Height / 2)) {
-                    y = (_graphicsDevice.Viewport.Height / 2);
-                }
-            }
-            else {
-                if (y < 0) {
-                    y = 0;
-                }
-                else if (y + tilesetH > _graphicsDevice.Viewport.Height) {
-                    y = _graphicsDevice.Viewport.Height - tilesetH;
-                }
-            }
-
-            /*if (tilesetW > (_graphicsDevice.Viewport.Width / 2)) {
-                if (x + tilesetW < (_graphicsDevice.Viewport.Width / 2)) {
-                    x = -tilesetW + (_graphicsDevice.Viewport.Width / 2);
-                }
-                else if (x > (_graphicsDevice.Viewport.Width / 2)) {
-                    x = (_graphicsDevice.Viewport.Width / 2);
-                }
-            }
-            else {
-                if (x < 0) {
-                    x = 0;
-                }
-                else if (x + tilesetW > _graphicsDevice.Viewport.Width) {
-                    x = _graphicsDevice.Viewport.Width - tilesetW;
-                }
-            }*/
-            //_camera.Teleport(x, y);
+            var cell = 1;
+            _camera.Teleport(Math2D.Snap(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), cell).X, Math2D.Snap(new Vector2(_camera.RawPosition.X, _camera.RawPosition.Y), cell).Y);
+            
         }
         
         private void Zoom(object sender, MouseScrollWheelValueChangeEventArgs e)

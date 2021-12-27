@@ -36,14 +36,17 @@ namespace editor
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             //render TopMenu
-            spriteBatch.Draw("p_w", new Rectangle(0, 0, 32, 32), new Color(185, 165, 136));
-            spriteBatch.Draw("icons/place", new Rectangle(0, 0, 32, 32), Color.White);
+            spriteBatch.Draw("p_w", new Rectangle(0, 0, 32, 32), CColor.DarkC);
+            spriteBatch.Draw("icons/place", new Rectangle(0, 0, 32, 32), CColor.Dark);
             
-            spriteBatch.Draw("p_w", new Rectangle(32, 0, 32, 32), new Color(185, 165, 136));
-            spriteBatch.Draw("icons/remove", new Rectangle(32, 0, 32, 32), Color.White);
+            spriteBatch.Draw("p_w", new Rectangle(32, 0, 32, 32), CColor.DarkC);
+            spriteBatch.Draw("icons/remove", new Rectangle(32, 0, 32, 32),  CColor.Dark);
             
-            spriteBatch.Draw("p_w", new Rectangle(64, 0, 32, 32), new Color(185, 165, 136));
-            spriteBatch.Draw("icons/edit", new Rectangle(64, 0, 32, 32), Color.White);
+            spriteBatch.Draw("p_w", new Rectangle(64, 0, 32, 32), CColor.DarkC);
+            spriteBatch.Draw("icons/edit", new Rectangle(64, 0, 32, 32),  CColor.Dark);
+            
+            spriteBatch.Draw("p_w", new Rectangle(96, 0, 32, 32), CColor.DarkC);
+            spriteBatch.Draw("icons/save", new Rectangle(96, 0, 32, 32),  CColor.Dark);
         }
 
     }
