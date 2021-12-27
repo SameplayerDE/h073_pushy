@@ -20,6 +20,11 @@ namespace editor
         
         private int _tileWidth = 32;
         private int _tileHeight = 32;
+        
+        private int _editorX;
+        private int _editorY;
+        private int _editorW;
+        private int _editorH;
 
         private Point _tranformedMouse;
         private Effect _effect;
@@ -40,6 +45,12 @@ namespace editor
             _camera = camera;
             _width = width;
             _height = height;
+            
+            _editorX = 128;
+            _editorY = 0;
+            _editorW = _graphicsDevice.Viewport.Width;
+            _editorH = _graphicsDevice.Viewport.Height;
+            
             _tiles = new int[_width, _height];
             var centerPosition = new Vector2(_width, height);
             centerPosition /= 2;
@@ -83,26 +94,26 @@ namespace editor
                 _effect.Parameters["OffY"].SetValue(areaY);
             }
             
-            if (tilesetH > (_graphicsDevice.Viewport.Height / 2)) //area is bigger
+            if (tilesetH > (_editorH / 2)) //area is bigger
             {
-                if (areaY + tilesetH < _graphicsDevice.Viewport.Height / 2)
+                if (areaY + tilesetH < _editorH / 2)
                 {
-                    _camera.Move(0, areaY + tilesetH - _graphicsDevice.Viewport.Height / 2);
+                    _camera.Move(0, areaY + tilesetH - _editorH / 2);
                 }
-                else if (areaY > (_graphicsDevice.Viewport.Height / 2))
+                else if (areaY > (_editorH / 2))
                 {
-                    _camera.Move(0, areaY - _graphicsDevice.Viewport.Height / 2);
+                    _camera.Move(0, areaY - _editorH / 2);
                 }
             }
             else
             {
-                if (areaY < 0)
+                if (areaY < _editorY)
                 {
-                    _camera.Move(0, areaY);
+                    _camera.Move(0, areaY + _editorY);
                 }
-                if (areaY + tilesetH > _graphicsDevice.Viewport.Height)
+                if (areaY + tilesetH > _editorH)
                 {
-                    _camera.Move(0, areaY + tilesetH - _graphicsDevice.Viewport.Height);
+                    _camera.Move(0, areaY + tilesetH - _editorH);
                 }
                 /*if (areaX < 0 || areaY < 0)
                 {
@@ -128,9 +139,9 @@ namespace editor
             }
             else
             {
-                if (areaX < 0)
+                if (areaX < _editorX)
                 {
-                    _camera.Move(areaX, 0);
+                    _camera.Move(areaX - _editorX, 0);
                 }
                 if (areaX + tilesetW > _graphicsDevice.Viewport.Width)
                 {
@@ -154,32 +165,35 @@ namespace editor
             {
                 case 120:
                     //UP
+                    _camera.ChangeScaleBy(_camera.Scale * 0.25f);
                     //_camera.ChangeScaleBy(0.1f);
-                    if (_camera.Scale < 1) {
-                        _camera.SetScale(_camera.Scale + 0.25f * 1);
+                    /*if (_camera.Scale < 1) {
+                        _camera.SetScale(_camera.Scale + 0.1f * 1);
                     }
                     else {
-                        _camera.SetScale(_camera.Scale + 0.25f * (int)_camera.Scale);
-                    }
+                        _camera.SetScale(_camera.Scale + 0.1f * (int)_camera.Scale);
+                    }*/
                     break;
                 case -120:
                     //Down
                     //_camera.ChangeScaleBy(-0.1f);
-                    if (_camera.Scale - (0.25f * (int)_camera.Scale) > 0.25f) {
-                        _camera.SetScale(_camera.Scale - 0.25f * (int)_camera.Scale);
+                    /*if (_camera.Scale < 1) {
+                        _camera.SetScale(_camera.Scale - 0.1f * 1);
                     }
                     else {
-                        _camera.SetScale(0.25f);
-                    }
+                        _camera.SetScale(_camera.Scale - 0.1f * (int)_camera.Scale);
+                    }*/
+                    _camera.ChangeScaleBy(-_camera.Scale * 0.25f);
                     break;
             }
-            float newWidth = _width * _camera.Scale;
+            /*float newWidth = _width * _camera.Scale;
             float newHeight = _height * _camera.Scale;
 
             float diffWidth = (oldWidth - newWidth);
             float diffHeight = (oldHeight - newHeight);
-            _camera.Move(diffWidth / 2, diffHeight / 2);
-            // _camera.SetScale((float) Math.Clamp(_camera.Scale, 0.1f, 10));
+            _camera.Move(diffWidth / 2, diffHeight / 2);*/
+             _camera.SetScale((float) Math.Clamp(_camera.Scale, 0.01f, 10));
+             Console.WriteLine(_camera.Scale);
             //TODO change offset with zoom
             //_offset -= (_offset.ToVector2() * _zoom).ToPoint();
         }
@@ -195,7 +209,7 @@ namespace editor
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: _effect);
+            spriteBatch.Begin(transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: _effect);
             //spriteBatch.Begin(effect: _effect);
 
             spriteBatch.Draw(
@@ -222,6 +236,27 @@ namespace editor
             }
 
             spriteBatch.End();
+        }
+
+        public void SetEditorPosition(int? x, int? y)
+        {
+            x ??= _editorX;
+            _editorX = x.Value;
+            y ??= _editorY;
+            _editorY = y.Value;
+        }
+        
+        public void SetEditorSize(int? x, int? y)
+        {
+            x ??= _editorW;
+            _editorW = x.Value;
+            y ??= _editorH;
+            _editorH = y.Value;
+        }
+        
+        public void SetEditorSize(Point size)
+        {
+            
         }
     }
 }

@@ -24,10 +24,16 @@ namespace editor
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += OnWindowSizeChange;
             
             _graphics.SynchronizeWithVerticalRetrace = false; //Vsync
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / TargetFps);
+        }
+
+        private void OnWindowSizeChange(object? sender, EventArgs e)
+        {
+            _editorTarget.SetEditorSize(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
 
         protected override void Initialize()
@@ -41,13 +47,16 @@ namespace editor
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 10, 10);
+            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 64, 64);
             _userInterfaceTarget = new UserInterfaceTarget(GraphicsDevice);
             // ReSharper disable once HeapView.DelegateAllocation
             _userInterfaceTarget.OnTileChange += OnTileSelectionChange;
+            _userInterfaceTarget.OnSelectionChangeSize += OnSelectionSizeChange;
 
             TextureContentLoader.Instance.LoadContent(Content);
             EffectContentLoader.Instance.LoadContent(Content);
+            SpriteFontContentLoader.Instance.LoadContent(Content);
+            
             
             base.LoadContent();
         }
@@ -57,6 +66,11 @@ namespace editor
             _editorTarget.TileSelection = args.Tile;
         }
         
+        private void OnSelectionSizeChange(object sender, SelectionSizeChangeEventArgs args)
+        {
+            _editorTarget.SetEditorPosition(args.Size, null);
+        }
+
         protected override void Update(GameTime gameTime)
         {
             if (!IsActive)
@@ -115,7 +129,7 @@ namespace editor
             
 
             //ui
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _userInterfaceTarget.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             

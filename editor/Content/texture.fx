@@ -12,7 +12,7 @@ Texture2D Texture : register(t0);
 sampler TextureSampler : register(s0)
 {
 	Texture = (Texture);
-	MinFilter = Point; // Minification Filter
+	MinFilter = Linear; // Minification Filter
     MagFilter = Point;// Magnification Filter
     MipFilter = Linear; // Mip-mapping
 	AddressU = Wrap; // Address Mode for U Coordinates
