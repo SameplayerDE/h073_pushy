@@ -48,7 +48,7 @@ namespace editor
             
             _editorX = 128;
             _editorY = 0;
-            _editorW = _graphicsDevice.Viewport.Width;
+            _editorW = _graphicsDevice.Viewport.Width - 32;
             _editorH = _graphicsDevice.Viewport.Height;
             
             _tiles = new int[_width, _height];
@@ -93,27 +93,32 @@ namespace editor
             {
                 _effect.Parameters["OffY"].SetValue(areaY);
             }
+
+            var tempX = _editorX + 6;
+            var tempY = _editorY + 6;
+            var tempW = _editorW - 6;
+            var tempH = _editorH - 6;
             
-            if (tilesetH > (_editorH / 2)) //area is bigger
+            if (tilesetH > (tempH / 2)) //area is bigger
             {
-                if (areaY + tilesetH < _editorH / 2)
+                if (areaY + tilesetH < tempH / 2)
                 {
-                    _camera.Move(0, areaY + tilesetH - _editorH / 2);
+                    _camera.Move(0, areaY + tilesetH - tempH / 2);
                 }
-                else if (areaY > (_editorH / 2))
+                else if (areaY > (tempH / 2))
                 {
-                    _camera.Move(0, areaY - _editorH / 2);
+                    _camera.Move(0, areaY - tempH / 2);
                 }
             }
             else
             {
-                if (areaY < _editorY)
+                if (areaY < tempY)
                 {
-                    _camera.Move(0, areaY + _editorY);
+                    _camera.Move(0, areaY - tempY);
                 }
-                if (areaY + tilesetH > _editorH)
+                if (areaY + tilesetH > tempH)
                 {
-                    _camera.Move(0, areaY + tilesetH - _editorH);
+                    _camera.Move(0, areaY + tilesetH - tempH);
                 }
                 /*if (areaX < 0 || areaY < 0)
                 {
@@ -126,26 +131,26 @@ namespace editor
             }
 
 
-            if (tilesetW > _graphicsDevice.Viewport.Width / 2)
+            if (tilesetW > tempW / 2)
             {
-                if (areaX + tilesetW < _graphicsDevice.Viewport.Width / 2)
+                if (areaX + tilesetW < tempW / 2)
                 {
-                    _camera.Move(areaX + tilesetW - _graphicsDevice.Viewport.Width / 2, 0);
+                    _camera.Move(areaX + tilesetW - tempW / 2, 0);
                 }
-                else if (areaX > (_graphicsDevice.Viewport.Width / 2))
+                else if (areaX > (tempW / 2))
                 {
-                    _camera.Move(areaX - _graphicsDevice.Viewport.Width / 2, 0);
+                    _camera.Move(areaX - tempW / 2, 0);
                 }
             }
             else
             {
-                if (areaX < _editorX)
+                if (areaX < tempX)
                 {
-                    _camera.Move(areaX - _editorX, 0);
+                    _camera.Move(areaX - tempX, 0);
                 }
-                if (areaX + tilesetW > _graphicsDevice.Viewport.Width)
+                if (areaX + tilesetW > tempW)
                 {
-                    _camera.Move(areaX + tilesetW - _graphicsDevice.Viewport.Width, 0);
+                    _camera.Move(areaX + tilesetW - tempW, 0);
                 }
             }
             
@@ -208,7 +213,6 @@ namespace editor
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            
             spriteBatch.Begin(transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: _effect);
             //spriteBatch.Begin(effect: _effect);
 
@@ -216,14 +220,15 @@ namespace editor
                 TextureContentLoader.Instance.Find("grid"),
                 new Rectangle(new Point(0, 0), new Point(_tileWidth * _width, _tileHeight * _height)),
                 null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
-            
             spriteBatch.End();
             
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position)); 
-            spriteBatch.Draw(
-            TextureContentLoader.Instance.Find("missing"),
-            new Rectangle(new Point((int)(_camera.RawPosition.X / _camera.Scale), (int)(_camera.RawPosition.Y / _camera.Scale)), new Point((int)(_tileWidth / _camera.Scale), (int)(_tileHeight / _camera.Scale))),
-            null, Color.White, 0f, TextureContentLoader.Instance.Find("missing").Bounds.Center.ToVector2(), SpriteEffects.None, 0f);
+
+            /*spriteBatch.Draw(
+                TextureContentLoader.Instance.Find("missing"),
+                new Rectangle(new Point((int)(_camera.RawPosition.X / _camera.Scale), (int)(_camera.RawPosition.Y / _camera.Scale)), new Point((int)(_tileWidth / _camera.Scale), (int)(_tileHeight / _camera.Scale))),
+                null, Color.White, 0f, TextureContentLoader.Instance.Find("missing").Bounds.Center.ToVector2(), SpriteEffects.None, 0f);
+            */
             
             //Mouse
             if (_drawMouse)
@@ -234,7 +239,20 @@ namespace editor
                         new Point(_tileWidth, _tileHeight)),
                     null, Color.White * 0.25f, 0f, Vector2.Zero, SpriteEffects.None, 0f);
             }
-
+            
+            spriteBatch.End();
+            
+                        
+                        
+            spriteBatch.Begin();
+            
+            
+            spriteBatch.Draw(
+                TextureContentLoader.Instance.Find("missing"),
+                new Rectangle(_editorX, _editorY, _editorW, _editorH).Center.ToVector2(),
+                null, Color.White, 0f, TextureContentLoader.Instance.Find("missing").Bounds.Center.ToVector2(), 1f, SpriteEffects.None, 0f);
+            NineTileRenderer.DrawSheet(spriteBatch, NineTileResourceLoader.Instance.Find("frame"), new Rectangle(_editorX, _editorY, _editorW - _editorX, _editorH - _editorY));
+            
             spriteBatch.End();
         }
 

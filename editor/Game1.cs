@@ -1,6 +1,7 @@
 ﻿using System;
 using HxGraphics;
 using HxInput;
+using HxSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,6 +18,8 @@ namespace editor
         private Camera _camera;
         private const int TargetFps = 60;
 
+        private Spritesheet _sheet;
+
         public Game1()
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
@@ -25,7 +28,7 @@ namespace editor
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnWindowSizeChange;
-            
+
             _graphics.SynchronizeWithVerticalRetrace = false; //Vsync
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / TargetFps);
@@ -33,11 +36,13 @@ namespace editor
 
         private void OnWindowSizeChange(object? sender, EventArgs e)
         {
-            _editorTarget.SetEditorSize(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            _editorTarget.SetEditorSize(Window.ClientBounds.Width - 32, Window.ClientBounds.Height);
         }
 
         protected override void Initialize()
         {
+            Hx.Instance.Init(this, _graphics, Framework.DesktopGL);
+            
             _camera = new Camera(_graphics);
             Graphics.Instance.SetGraphicsDeviceManager(_graphics);
             base.Initialize();
@@ -54,10 +59,12 @@ namespace editor
             _userInterfaceTarget.OnSelectionChangeSize += OnSelectionSizeChange;
 
             TextureContentLoader.Instance.LoadContent(Content);
+            NineTileResourceLoader.Instance.LoadResources();
             EffectContentLoader.Instance.LoadContent(Content);
             SpriteFontContentLoader.Instance.LoadContent(Content);
-            
-            
+
+            _sheet = new Spritesheet(GraphicsDevice, TextureContentLoader.Instance.Find("atlas"), 16, 16);
+                
             base.LoadContent();
         }
         

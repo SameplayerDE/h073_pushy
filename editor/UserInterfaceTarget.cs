@@ -80,6 +80,9 @@ namespace editor
         {
             var sideSize = 32;
             //Render Tool Side
+            
+            spriteBatch.Draw("p_w", new Rectangle(_vWidth - sideSize, 0, sideSize, _vHeight), CColor.DarkC);
+            
             spriteBatch.Draw("p_w", new Rectangle(_vWidth - sideSize, 0, sideSize, sideSize), CColor.DarkC);
             spriteBatch.Draw("icons/select", new Rectangle(_vWidth - sideSize, 0, sideSize, sideSize), CColor.Dark);
             

@@ -25,6 +25,7 @@ namespace editor
             Add("missing", contentManager.Load<Texture2D>("missing"), true);
             Add("grid", contentManager.Load<Texture2D>("grid"));
             Add("p_w", Graphics.Instance.GenerateTexture2D(2, 2, Color.White));
+            Add("atlas", contentManager.Load<Texture2D>("atlas"));
             
             //Icons
             Add("icons/place", contentManager.Load<Texture2D>("icons/place"));
@@ -33,6 +34,11 @@ namespace editor
             Add("icons/save", contentManager.Load<Texture2D>("icons/save"));
             Add("icons/paint", contentManager.Load<Texture2D>("icons/paint"));
             Add("icons/select", contentManager.Load<Texture2D>("icons/select"));
+            
+            //Ui
+            Add("ui/frame", contentManager.Load<Texture2D>("ui/frame"));
+            Add("ui/scrollbar", contentManager.Load<Texture2D>("ui/scrollbar"));
+            Add("ui/test", contentManager.Load<Texture2D>("ui/test"));
         }
     }
 
