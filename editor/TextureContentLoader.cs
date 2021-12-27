@@ -25,6 +25,29 @@ namespace editor
             Add("missing", contentManager.Load<Texture2D>("missing"), true);
             Add("grid", contentManager.Load<Texture2D>("grid"));
             Add("p_w", Graphics.Instance.GenerateTexture2D(2, 2, Color.White));
+            
+            //Icons
+            Add("icons/place", contentManager.Load<Texture2D>("icons/place"));
+            Add("icons/remove", contentManager.Load<Texture2D>("icons/remove"));
+            Add("icons/edit", contentManager.Load<Texture2D>("icons/edit"));
         }
     }
+
+    namespace Texture
+    {
+        public static class Extension
+        {
+            public static void Draw(this SpriteBatch spriteBatch, string texture, Vector2 position, Color color)
+            {
+                spriteBatch.Draw(TextureContentLoader.Instance.Find(texture), position, color);
+            }
+            
+            public static void Draw(this SpriteBatch spriteBatch, string texture, Rectangle rectangle, Color color)
+            {
+                spriteBatch.Draw(TextureContentLoader.Instance.Find(texture), rectangle, color);
+            }
+        }
+    }
+    
+    
 }

@@ -43,6 +43,8 @@ namespace editor
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _editorTarget = new EditorTarget(GraphicsDevice, _camera, 10, 10);
             _userInterfaceTarget = new UserInterfaceTarget(GraphicsDevice);
+            // ReSharper disable once HeapView.DelegateAllocation
+            _userInterfaceTarget.OnTileChange += OnTileSelectionChange;
 
             TextureContentLoader.Instance.LoadContent(Content);
             EffectContentLoader.Instance.LoadContent(Content);
@@ -50,7 +52,7 @@ namespace editor
             base.LoadContent();
         }
         
-        private void OnTileSelectionChange(object? sender, TileChangeEventArgs args)
+        private void OnTileSelectionChange(object sender, TileChangeEventArgs args)
         {
             _editorTarget.TileSelection = args.Tile;
         }
@@ -93,6 +95,7 @@ namespace editor
             }
             
             _editorTarget.Update(gameTime);
+            _userInterfaceTarget.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -113,6 +116,7 @@ namespace editor
 
             //ui
             _spriteBatch.Begin();
+            _userInterfaceTarget.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
             base.Draw(gameTime);

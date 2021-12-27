@@ -88,14 +88,14 @@ namespace editor
             {
                 case 120:
                     //UP
-                    _camera.ChangeScaleBy(1);
+                    _camera.ChangeScaleBy(0.1f);
                     break;
                 case -120:
                     //Down
-                    _camera.ChangeScaleBy(-1);
+                    _camera.ChangeScaleBy(-0.1f);
                     break;
             }
-            _camera.SetScale(Math.Clamp(_camera.Scale, 1, 10));;
+            _camera.SetScale((float) Math.Clamp(Math.Round(_camera.Scale), 0.1f, 10));
             //TODO change offset with zoom
             //_offset -= (_offset.ToVector2() * _zoom).ToPoint();
         }
