@@ -36,8 +36,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float2 calculatedUVs = input.TextureCoordinates;
     calculatedUVs *= float2(Width, Height) / 2; //grid pattern
-    calculatedUVs.x = (calculatedUVs.x * 10) / 10;
-    calculatedUVs.y = (calculatedUVs.y * 10) / 10;
     float4 textureColor = tex2D(TextureSampler, calculatedUVs);
     
     return textureColor;
