@@ -31,6 +31,8 @@ namespace editor
             Add("icons/remove", contentManager.Load<Texture2D>("icons/remove"));
             Add("icons/edit", contentManager.Load<Texture2D>("icons/edit"));
             Add("icons/save", contentManager.Load<Texture2D>("icons/save"));
+            Add("icons/paint", contentManager.Load<Texture2D>("icons/paint"));
+            Add("icons/select", contentManager.Load<Texture2D>("icons/select"));
         }
     }
 
