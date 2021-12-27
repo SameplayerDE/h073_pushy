@@ -13,6 +13,7 @@ namespace editor
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private EditorTarget _editorTarget;
+        private UserInterfaceTarget _userInterfaceTarget;
         private Camera _camera;
         private const int TargetFps = 60;
 
@@ -31,7 +32,7 @@ namespace editor
 
         protected override void Initialize()
         {
-            _camera = new Camera();
+            _camera = new Camera(_graphics);
             Graphics.Instance.SetGraphicsDeviceManager(_graphics);
             base.Initialize();
         }
@@ -40,14 +41,20 @@ namespace editor
         {
             // ReSharper disable once HeapView.ObjectAllocation.Evident
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 32, 32);
+            _editorTarget = new EditorTarget(GraphicsDevice, _camera, 10, 10);
+            _userInterfaceTarget = new UserInterfaceTarget(GraphicsDevice);
 
             TextureContentLoader.Instance.LoadContent(Content);
             EffectContentLoader.Instance.LoadContent(Content);
             
             base.LoadContent();
         }
-
+        
+        private void OnTileSelectionChange(object? sender, TileChangeEventArgs args)
+        {
+            _editorTarget.TileSelection = args.Tile;
+        }
+        
         protected override void Update(GameTime gameTime)
         {
             if (!IsActive)
