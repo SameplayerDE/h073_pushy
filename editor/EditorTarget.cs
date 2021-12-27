@@ -244,7 +244,7 @@ namespace editor
             
                         
                         
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             
             
             spriteBatch.Draw(

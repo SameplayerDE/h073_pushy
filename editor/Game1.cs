@@ -134,7 +134,6 @@ namespace editor
             //scene
             _editorTarget.Draw(_spriteBatch, gameTime);
             
-
             //ui
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _userInterfaceTarget.Draw(_spriteBatch, gameTime);
