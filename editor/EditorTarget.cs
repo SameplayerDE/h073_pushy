@@ -21,12 +21,16 @@ namespace editor
         private int _tileHeight = 32;
 
         private Point _tranformedMouse;
-        private Effect _effect; 
+        private Effect _effect;
+
+        private bool _drawMouse = false;
         
         
         public int Width => _width;
         public int Height => _height;
         public int[,] Tiles => _tiles;
+
+        public int TileSelection = -1;
         
 
         public EditorTarget(GraphicsDevice graphicsDevice, Camera camera, int width = 64, int height = 64)
@@ -36,6 +40,10 @@ namespace editor
             _width = width;
             _height = height;
             _tiles = new int[_width, _height];
+            var centerPosition = new Vector2(_width, height);
+            centerPosition /= 2;
+            centerPosition *= 32;
+            _camera.Teleport(centerPosition.X, centerPosition.Y);
             Input.Instance.OnMouseScrollWheelValueChange += Zoom;
             Input.Instance.OnMouseMove += Move;
         }
@@ -64,6 +72,10 @@ namespace editor
             }
  
             _tranformedMouse = Math2D.InverseTransform(Input.Instance.LatestMousePosition, Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position)).ToPoint();
+            var area = new Rectangle(new Point(0, 0), new Point(_tileWidth * _width, _tileHeight * _height));
+            
+            _drawMouse = area.Contains(_tranformedMouse);
+
         }
         
         private void Zoom(object sender, MouseScrollWheelValueChangeEventArgs e)
@@ -116,10 +128,15 @@ namespace editor
                // null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
             
             //Mouse
-            spriteBatch.Draw(
-                TextureContentLoader.Instance.Find("p_w"),
-                new Rectangle(Math2D.Snap(_tranformedMouse, _tileHeight).ToPoint(), new Point(_tileWidth, _tileHeight)),
-                null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            if (_drawMouse)
+            {
+                spriteBatch.Draw(
+                    TextureContentLoader.Instance.Find("p_w"),
+                    new Rectangle(Math2D.Snap(_tranformedMouse, _tileHeight).ToPoint(),
+                        new Point(_tileWidth, _tileHeight)),
+                    null, Color.White * 0.25f, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            }
+
             spriteBatch.End();
         }
     }
