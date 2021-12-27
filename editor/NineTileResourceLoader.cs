@@ -20,7 +20,7 @@ namespace editor
         public override void LoadResources()
         {
             Add("frame", new NineTile(TextureContentLoader.Instance.Find("ui/frame"),6), true);
-            Add("scrollbar", new NineTile(TextureContentLoader.Instance.Find("ui/frame"), 2));
+            Add("scrollbar", new NineTile(TextureContentLoader.Instance.Find("ui/scrollbar"), 4));
             Add("test", new NineTile(TextureContentLoader.Instance.Find("ui/test"), 6));
         }
 

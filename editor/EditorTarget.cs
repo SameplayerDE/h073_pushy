@@ -13,6 +13,7 @@ namespace editor
 
         private Camera _camera;
         private GraphicsDevice _graphicsDevice;
+        private RenderTarget2D _target;
         
         private int _width;
         private int _height;
@@ -50,6 +51,8 @@ namespace editor
             _editorY = 0;
             _editorW = _graphicsDevice.Viewport.Width - 32;
             _editorH = _graphicsDevice.Viewport.Height;
+
+            _target = new RenderTarget2D(_graphicsDevice, _editorW, _editorH, false, SurfaceFormat.Rgba64, DepthFormat.Depth24);
             
             _tiles = new int[_width, _height];
             var centerPosition = new Vector2(_width, height);
@@ -129,8 +132,6 @@ namespace editor
                     _camera.Move(areaX + tilesetW > _graphicsDevice.Viewport.Width ? (areaX + tilesetW - _graphicsDevice.Viewport.Width) : 0, areaY + tilesetH > _graphicsDevice.Viewport.Height ? areaY + tilesetH - _graphicsDevice.Viewport.Height : 0);
                 }*/
             }
-
-
             if (tilesetW > tempW / 2)
             {
                 if (areaX + tilesetW < tempW / 2)
@@ -160,7 +161,11 @@ namespace editor
         
         private void Zoom(object sender, MouseScrollWheelValueChangeEventArgs e)
         {
-            if (Input.Instance.IsMouseKeyDown(MouseButton.Middle))
+            var tempX = _editorX + 6;
+            var tempY = _editorY + 6;
+            var tempW = _editorW - 6;
+            var tempH = _editorH - 6;
+            if (Input.Instance.IsMouseKeyDown(MouseButton.Middle) || !new Rectangle(tempX, tempY, tempW, tempH).Contains(Input.Instance.LatestMousePosition))
             {
                 return;
             }

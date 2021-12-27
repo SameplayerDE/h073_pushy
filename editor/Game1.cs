@@ -1,4 +1,5 @@
 ﻿using System;
+using editor.UI;
 using HxGraphics;
 using HxInput;
 using HxSystem;
@@ -19,6 +20,7 @@ namespace editor
         private const int TargetFps = 60;
 
         private Spritesheet _sheet;
+        private HScrollBar _scroll;
 
         public Game1()
         {
@@ -45,6 +47,7 @@ namespace editor
             
             _camera = new Camera(_graphics);
             Graphics.Instance.SetGraphicsDeviceManager(_graphics);
+            _scroll = new HScrollBar(new Point(0, 0), new Point(16, Hx.Instance.ViewportHeight));
             base.Initialize();
         }
 
@@ -86,6 +89,7 @@ namespace editor
             }
             
             Input.Instance.Update(gameTime);
+            _scroll.Update(gameTime);
 
             var direction = Vector2.Zero;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
@@ -137,6 +141,7 @@ namespace editor
             //ui
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _userInterfaceTarget.Draw(_spriteBatch, gameTime);
+            _scroll.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
             base.Draw(gameTime);
