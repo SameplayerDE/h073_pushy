@@ -14,6 +14,7 @@ namespace h073_pushy
         private Camera _camera;
 
         private Stage _stage;
+        private TextureCollection col;
 
         public Game1()
         {
@@ -22,6 +23,8 @@ namespace h073_pushy
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
+
+           
         }
 
         protected override void Initialize()
@@ -29,7 +32,12 @@ namespace h073_pushy
             _camera = new Camera(_graphics);
             _stage = StageLoader.LoadFromFile("stagexxx.stage");
             _stage.Camera = _camera;
-            _stage.AddStageObject(new Door(4, 0));
+
+            var door = new Door(4, 0);
+            var @switch = new Switch(4, 5, door);
+            
+            _stage.AddStageObject(door);
+            _stage.AddStageObject(@switch);
             
             base.Initialize();
         }
@@ -69,6 +77,15 @@ namespace h073_pushy
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
             _stage.Draw(_spriteBatch, gameTime);
+            _spriteBatch.End();
+            
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            var scale = 4;
+            for (var i = 0; i < _stage.Pushy.Inventory.MaxSize; i++)
+            {
+                _spriteBatch.Draw(TextureContentLoader.Instance.Find("inventory_slot"), new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)), Color.White);
+                _spriteBatch.Draw(TextureContentLoader.Instance.Find("inventory_key"), new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)), Color.White);
+            }
             _spriteBatch.End();
             
             base.Draw(gameTime);

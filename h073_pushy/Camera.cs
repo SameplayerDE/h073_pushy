@@ -6,7 +6,7 @@ namespace h073_pushy
     public class Camera
     {
         private Vector3 _position = Vector3.Zero;
-        private float _scale = 1f;
+        private float _scale = 2.5f;
         private GraphicsDevice _graphicsDevice;
 
         public Camera(GraphicsDeviceManager graphics)

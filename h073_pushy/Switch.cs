@@ -5,33 +5,37 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace h073_pushy
 {
-    public class Switch
+    public class Switch : StageObject
     {
-        
-        private string _textureKey;
-        private Texture2D _texture = null;
-        private GenericRequest<Texture2D> _request;
-        private Point _position;
-        
-        public bool Toggled = false;
-        public Door Door = null;
+        private Door _door;
+        private bool _isActive = false;
 
-        public void Update(GameTime gameTime)
+        public Switch(int x = 0, int y = 0, Door door = null) : base(x, y)
         {
-            if (Door != null)
+            _door = door;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (_door != null)
             {
-                Door.IsOpen = Toggled;
+                if (_stage.IsMovable(_position.X, _position.Y))
+                {
+                    _isActive = true;
+                }
+                else
+                {
+                    _isActive = false;
+                }
+                _door.IsOpen = _isActive;
             }
         }
-        
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            if (_request.Success == false)
-            {
-                return;
-            }
-            spriteBatch.Draw(_request.Result, _position.ToVector2() * 32f, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TextureContentLoader.Instance.Find(!_isActive ? "switch_open" : "switch_closed"),
+                _position.ToVector2() * 32f, null, _color, _direction.ToRotation(), new Vector2(16, 16), 1f,
+                SpriteEffects.None, 0f);
         }
-        
     }
 }

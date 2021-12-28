@@ -3,19 +3,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace h073_pushy
 {
-    public abstract class StageObject
+    public abstract class MovableObject
     {
         protected string _textureKey = string.Empty;
         protected Point _position;
         protected Color _color;
-        protected bool _isBlocking;
+        //protected bool _isBlocking;
         protected Direction _direction;
         protected Stage _stage = null;
 
-        public bool IsBlocking => _isBlocking;
+        //public bool IsBlocking => _isBlocking;
         public Point Position => _position;
         
-        public StageObject(int x = 0, int y = 0)
+        public MovableObject(int x = 0, int y = 0)
         {
             _color = Color.White;
             _position.X = x;

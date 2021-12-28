@@ -86,7 +86,7 @@ namespace h073_pu_iso
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(_texture, _position.ToVector2() * 32f, null, Color.White, _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(SpritesheetResourceLoader.Instance.Find("iso").Sprites[29], Utils.ToIsometric(_position.X, _position.Y).ToVector2(), null, Color.White, _direction.ToRotation() * 0, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
         }
     }
 }

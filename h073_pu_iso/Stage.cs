@@ -174,7 +174,9 @@ namespace h073_pu_iso
             {
                 _stageObjects[i].Update(gameTime);
             }
-            Camera.Teleport(Pushy.X * 32, Pushy.Y * 32);
+
+            var pos = Utils.ToIsometric(Pushy.X, Pushy.Y).ToVector2();
+            Camera.Teleport(pos.X, pos.Y);
         }
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -184,24 +186,58 @@ namespace h073_pu_iso
             {
                 for (int y = 0; y < _height; y++)
                 {
-                    spriteBatch.Draw(SpritesheetResourceLoader.Instance.Find("iso").Sprites[IsBlockedByWall(x, y) ? 0 : 1], /*new Vector2(x, y) * 32*/Utils.ToIsometric(x, y).ToVector2(), null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+                    if (!IsBlockedByWall(x, y))
+                    {
+                        spriteBatch.Draw(
+                            SpritesheetResourceLoader.Instance.Find("iso")
+                                .Sprites[2], /*new Vector2(x, y) * 32*/
+                            Utils.ToIsometric(x, y).ToVector2(), null, Color.White, 0f, new Vector2(16, 16), 1f,
+                            SpriteEffects.None, 0f);
+                    }
+                    if (Pushy.X == x && Pushy.Y == y)
+                    {
+                        _pushy.Draw(spriteBatch, gameTime);
+                    }
+                    for (var i = _parsers.Count - 1; i >= 0; i--)
+                    {
+                        if ( _parsers[i].Position.X == x &&  _parsers[i].Position.Y == y)
+                        {
+                            _parsers[i].Draw(spriteBatch, gameTime);
+                        }
+                    }
+                    for (var i = _balls.Count - 1; i >= 0; i--)
+                    {
+                        if ( _balls[i].Position.X == x &&  _balls[i].Position.Y == y)
+                        {
+                            _balls[i].Draw(spriteBatch, gameTime);
+                        }
+                    }
+                    for (var i = _stageObjects.Count - 1; i >= 0; i--)
+                    {
+                        if ( _stageObjects[i].Position.X == x &&  _stageObjects[i].Position.Y == y)
+                        {
+                            _stageObjects[i].Draw(spriteBatch, gameTime);
+                        }
+                    }
+                }
+            }
+            
+            for (int x = 0; x < _width; x++)
+            {
+                for (int y = 0; y < _height; y++)
+                {
+                    if (IsBlockedByWall(x, y))
+                    {
+                        //spriteBatch.Draw(SpritesheetResourceLoader.Instance.Find("iso").Sprites[13], /*new Vector2(x, y) * 32*/Utils.ToIsometric(x - 1, y - 1).ToVector2(), null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+
+                    }
+                    
                 }
             }
             
             spriteBatch.Draw(TextureContentLoader.Instance.Request("house").Result, _end.ToVector2() * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
-            for (var i = _parsers.Count - 1; i >= 0; i--)
-            {
-                _parsers[i].Draw(spriteBatch, gameTime);
-            }
-            for (var i = _balls.Count - 1; i >= 0; i--)
-            {
-                _balls[i].Draw(spriteBatch, gameTime);
-            }
-            for (var i = _stageObjects.Count - 1; i >= 0; i--)
-            {
-                _stageObjects[i].Draw(spriteBatch, gameTime);
-            }
-            _pushy.Draw(spriteBatch, gameTime);
+            
+           
         }
         
     }

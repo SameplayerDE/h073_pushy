@@ -31,6 +31,13 @@ namespace h073_pushy
             
             Add("door_open", contentManager.Load<Texture2D>("door_open"));
             Add("door_closed", contentManager.Load<Texture2D>("door_closed"));
+            
+            Add("switch_open", contentManager.Load<Texture2D>("switch_open"));
+            Add("switch_closed", contentManager.Load<Texture2D>("switch_close"));
+            
+            Add("inventory_slot", contentManager.Load<Texture2D>("inventory_slot"));
+            Add("inventory_missing", contentManager.Load<Texture2D>("inventory_missing"));
+            Add("inventory_key", contentManager.Load<Texture2D>("inventory_key"));
 
             for (var i = 1; i <= 16; i++)
             {

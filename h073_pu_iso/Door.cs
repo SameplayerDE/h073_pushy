@@ -18,7 +18,7 @@ namespace h073_pu_iso
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(TextureContentLoader.Instance.Find(IsOpen ? "door_open" : "door_closed"), _position.ToVector2() * 32f, null, _color, _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(SpritesheetResourceLoader.Instance.Find("iso").Sprites[44], Utils.ToIsometric(_position.X, _position.Y).ToVector2(), null, _color, _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
         }
     }
 }

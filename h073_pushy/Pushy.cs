@@ -6,21 +6,25 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace h073_pushy
 {
-    public class Pushy
+    public class Pushy : IInventoryHolder
     {
         private string _textureKey;
         private Texture2D _texture = null;
         private Point _position;
 
+        private Inventory _inventory;
         private Direction _direction = Direction.Up;
         private Stage _stage = null;
 
         public int X => _position.X;
         public int Y => _position.Y;
+
+        public Inventory Inventory => _inventory;
         
         public Pushy(Stage stage)
         {
             _stage = stage;
+            _inventory = new Inventory(this);
             _textureKey = "pushy";
         }
         

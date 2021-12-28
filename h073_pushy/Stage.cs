@@ -174,7 +174,7 @@ namespace h073_pushy
             {
                 _stageObjects[i].Update(gameTime);
             }
-            Camera.Teleport(Pushy.X * 32, Pushy.Y * 32);
+            Camera.Teleport(Pushy.X * 32 * Camera.Scale, Pushy.Y * 32 * Camera.Scale);
         }
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -188,7 +188,11 @@ namespace h073_pushy
                 }
             }
             
-            spriteBatch.Draw(TextureContentLoader.Instance.Request("house").Result, _end.ToVector2() * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            for (var i = _stageObjects.Count - 1; i >= 0; i--)
+            {
+                _stageObjects[i].Draw(spriteBatch, gameTime);
+            }
+            
             for (var i = _parsers.Count - 1; i >= 0; i--)
             {
                 _parsers[i].Draw(spriteBatch, gameTime);
@@ -197,10 +201,10 @@ namespace h073_pushy
             {
                 _balls[i].Draw(spriteBatch, gameTime);
             }
-            for (var i = _stageObjects.Count - 1; i >= 0; i--)
-            {
-                _stageObjects[i].Draw(spriteBatch, gameTime);
-            }
+            
+            spriteBatch.Draw(TextureContentLoader.Instance.Request("house").Result, _end.ToVector2() * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            
+            
             _pushy.Draw(spriteBatch, gameTime);
         }
         
