@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using HxInput;
+using HxSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace h073_pushy
+namespace h073_pu_iso
 {
     public class Game1 : Game
     {
