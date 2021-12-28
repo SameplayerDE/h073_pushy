@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "h073_pushy", "h073_pushy\h0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "editor", "editor\editor.csproj", "{2C1C98CC-A6EF-495F-BBC0-133607F5803B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "h073_pu_iso", "h073_pu_iso\h073_pu_iso.csproj", "{48F03D95-38EA-4D26-9E99-51C6B5D9A5EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "h073_pu_iso", "h073_pu_iso\h073_pu_iso.csproj", "{3087D013-0A5C-4414-AB85-5A7236561342}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,5 +20,9 @@ Global
 		{2C1C98CC-A6EF-495F-BBC0-133607F5803B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C1C98CC-A6EF-495F-BBC0-133607F5803B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C1C98CC-A6EF-495F-BBC0-133607F5803B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3087D013-0A5C-4414-AB85-5A7236561342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3087D013-0A5C-4414-AB85-5A7236561342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3087D013-0A5C-4414-AB85-5A7236561342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3087D013-0A5C-4414-AB85-5A7236561342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

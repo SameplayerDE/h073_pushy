@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using HxInput;
-using HxSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
