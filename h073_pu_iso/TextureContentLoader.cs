@@ -28,6 +28,8 @@ namespace h073_pu_iso
             Add("floor", contentManager.Load<Texture2D>("floor"));
             Add("parser", contentManager.Load<Texture2D>("parser"));
             Add("house", contentManager.Load<Texture2D>("house"));
+
+            Add("atlas", contentManager.Load<Texture2D>("atlas"));
             
             Add("door_open", contentManager.Load<Texture2D>("door_open"));
             Add("door_closed", contentManager.Load<Texture2D>("door_closed"));

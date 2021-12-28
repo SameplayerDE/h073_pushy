@@ -40,6 +40,9 @@ namespace h073_pu_iso
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             TextureContentLoader.Instance.LoadContent(Content);
+
+            SpritesheetResourceLoader.Instance.Add("default",
+                new Spritesheet(GraphicsDevice, TextureContentLoader.Instance.Find("atlas"), 64, 32), true);
             
             base.LoadContent();
         }

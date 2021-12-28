@@ -184,7 +184,7 @@ namespace h073_pu_iso
             {
                 for (int y = 0; y < _height; y++)
                 {
-                    spriteBatch.Draw(TextureContentLoader.Instance.Find(IsBlocked(x, y) ? "wall" : "floor"), new Vector2(x, y) * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(SpritesheetResourceLoader.Instance.Find("iso").Sprites[IsBlockedByWall(x, y) ? 0 : 1], /*new Vector2(x, y) * 32*/Utils.ToIsometric(x, y).ToVector2(), null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
                 }
             }
             
