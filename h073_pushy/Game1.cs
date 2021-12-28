@@ -33,7 +33,7 @@ namespace h073_pushy
             _camera = new Camera(_graphics);
             _stage = StageLoader.LoadFromFile("stagexxx.stage");
             _stage.Camera = _camera;
-            _stage.AddStageObject(new Door(5, 3));
+            _stage.AddStageObject(new Door(4, 0));
             
             base.Initialize();
         }
@@ -71,7 +71,7 @@ namespace h073_pushy
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
             _stage.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
