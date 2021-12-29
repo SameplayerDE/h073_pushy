@@ -24,8 +24,6 @@ namespace h073_pushy
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-
-           
         }
 
         protected override void Initialize()
@@ -34,13 +32,11 @@ namespace h073_pushy
             _stage = StageLoader.LoadFromFile("stagexxx.stage");
             _stage.Camera = _camera;
 
-            var door = new Door(4, 0);
-            var @switch = new Switch(4, 5, door);
+            var door = new Door(4, 9);
             
             _stage.AddStageObject(door);
-            _stage.AddStageObject(@switch);
 
-            var key = new InventoryObject(3, 3, new Key());
+            var key = new InventoryObject(3, 12, new Key());
 
             _stage.AddInventoryObject(key);
 
@@ -104,6 +100,16 @@ namespace h073_pushy
                     new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)), Color.White);
                 if (_stage.Pushy.Inventory.Content[i] != null)
                 {
+                    if (_stage.Pushy.MainHandSlot == i)
+                    {
+                        //_spriteBatch.Draw(TextureContentLoader.Instance.Find(_stage.Pushy.Inventory.Content[i].StageTexture),
+                        //    new Rectangle(new Point(16 * scale * i + 8, (int)(8 + Math.Sin(gameTime.TotalGameTime.TotalSeconds) * 10)), new Point(16 * scale + (int)(Math.Sin(gameTime.TotalGameTime.TotalSeconds) * 10), 16 * scale)),
+                        //    Color.White);
+                    }
+                    else
+                    {
+                        
+                    }
                     _spriteBatch.Draw(TextureContentLoader.Instance.Find(_stage.Pushy.Inventory.Content[i].StageTexture),
                         new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)),
                         Color.White);

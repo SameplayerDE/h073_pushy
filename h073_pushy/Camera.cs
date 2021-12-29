@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace h073_pushy
@@ -22,6 +23,20 @@ namespace h073_pushy
             _position.X += x;
             _position.Y += y;
             _position.Z += z;
+        }
+
+        public void Lerp(int x, int y, int z = 0, float amount = 0.5f)
+        {
+            _position.X = MathHelper.Lerp(_position.X, x, amount);
+            _position.Y = MathHelper.Lerp(_position.Y, y, amount);
+            _position.Z = MathHelper.Lerp(_position.Z, z, amount);
+        }
+        
+        public void Lerp(float x, float y, float z = 0, float amount = 0.5f)
+        {
+            _position.X = MathHelper.Lerp(_position.X, x, amount);
+            _position.Y = MathHelper.Lerp(_position.Y, y, amount);
+            _position.Z = MathHelper.Lerp(_position.Z, z, amount);
         }
 
         public void Move(float x, float y, float z = 0f)

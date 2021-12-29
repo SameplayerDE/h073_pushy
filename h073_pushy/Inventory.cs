@@ -64,6 +64,10 @@ namespace h073_pushy
         {
             Array.Clear(_content, 0, _maxSize);
         }
-        
+
+        public void Remove(int slot)
+        {
+            Array.Clear(_content, slot, 1);
+        }
     }
 }

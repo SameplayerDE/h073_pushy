@@ -118,14 +118,29 @@ namespace h073_pushy
             return IsBlockedByWall(x, y) || result;
         }
         
+        public bool IsBlocked(float x, float y)
+        {
+            return IsBlocked((int)x, (int)y);
+        }
+        
         private bool IsBlockedByWall(int x, int y)
         {
             return IsStage(x, y) ? _walls[x, y] : true;
+        }
+        
+        private bool IsBlockedByWall(float x, float y)
+        {
+            return IsStage(x, y) ? _walls[(int)x, (int)y] : true;
         }
 
         private bool IsStage(int x, int y)
         {
             return x >= 0 && y >= 0 && x < _width && y < _height;
+        }
+        
+        private bool IsStage(float x, float y)
+        {
+            return IsStage((int)x, (int)y);
         }
         
         public bool IsMovable(int x, int y)
@@ -141,6 +156,11 @@ namespace h073_pushy
             return false;
         }
         
+        public bool IsMovable(float x, float y)
+        {
+            return IsMovable((int)x, (int)y);
+        }
+        
         public bool IsInventoryObject(int x, int y)
         {
             for (var i = _inventoryObjects.Count - 1; i >= 0; i--)
@@ -152,6 +172,11 @@ namespace h073_pushy
             }
 
             return false;
+        }
+        
+        public bool IsInventoryObject(float x, float y)
+        {
+            return IsInventoryObject((int)x, (int)y);
         }
 
         public InventoryObject GetInventoryObject(int x, int y)
@@ -167,11 +192,16 @@ namespace h073_pushy
             return null;
         }
         
-        public bool IsParser(int x, int y)
+        public InventoryObject GetInventoryObject(float x, float y)
         {
-            for (var i = _parsers.Count - 1; i >= 0; i--)
+            return GetInventoryObject((int)x, (int)y);
+        }
+        
+        public bool IsStageObject(int x, int y)
+        {
+            for (var i = _stageObjects.Count - 1; i >= 0; i--)
             {
-                if (_parsers[i].Position.X == x && _parsers[i].Position.Y == y)
+                if (_stageObjects[i].Position.X == x && _stageObjects[i].Position.Y == y)
                 {
                     return true;
                 }
@@ -192,6 +222,11 @@ namespace h073_pushy
             return null;
         }
         
+        public Ball GetMovable(float x, float y)
+        {
+            return GetMovable((int)x, (int)y);
+        }
+        
         public void Update(GameTime gameTime)
         {
             _pushy.Update(gameTime);
@@ -207,7 +242,7 @@ namespace h073_pushy
             {
                 _stageObjects[i].Update(gameTime);
             }
-            Camera.Teleport(Pushy.X * 32 * Camera.Scale, Pushy.Y * 32 * Camera.Scale);
+            Camera.Teleport(Pushy.Xf * 32 * Camera.Scale, Pushy.Yf * 32 * Camera.Scale, 0);
         }
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -256,5 +291,28 @@ namespace h073_pushy
         {
             _inventoryObjects.Remove(item);
         }
+
+        public bool IsStageObject(float x, float y)
+        {
+            return IsStageObject((int)x, (int)y);
+        }
+        
+        public StageObject GetStageObject(int x, int y)
+        {
+            for (var i = _stageObjects.Count - 1; i >= 0; i--)
+            {
+                if (_stageObjects[i].Position.X == x && _stageObjects[i].Position.Y == y)
+                {
+                    return _stageObjects[i];
+                }
+            }
+            return null;
+        }
+        
+        public StageObject GetStageObject(float x, float y)
+        {
+            return GetStageObject((int)x, (int)y);
+        }
+        
     }
 }
