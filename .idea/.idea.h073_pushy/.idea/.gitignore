@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 # Rider ignored files
+*.mgcontent
 /modules.xml
 /projectSettingsUpdater.xml
 /.idea.h073_pushy.iml
