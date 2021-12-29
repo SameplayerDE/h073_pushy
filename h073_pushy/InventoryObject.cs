@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace h073_pushy
 {
-    public abstract class InventoryObject
+    public class InventoryObject
     {
         protected string _textureKey = string.Empty;
         protected Point _position;
@@ -19,6 +20,16 @@ namespace h073_pushy
             _position.Y = y;
             _color = Color.White;
             _direction = Direction.Up;
+        }
+
+        public void SetStage(Stage stage)
+        {
+            _stage = stage;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            spriteBatch.Draw(TextureContentLoader.Instance.Find("missing"), _position.ToVector2() * 32f, null, _color, _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
         }
     }
 }

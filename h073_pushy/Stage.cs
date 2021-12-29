@@ -11,6 +11,7 @@ namespace h073_pushy
         private List<Ball> _balls;
         private List<Parser> _parsers;
         private List<StageObject> _stageObjects;
+        private List<InventoryObject> _inventoryObjects;
         private readonly int _width;
         private readonly int _height;
         private Point _end;
@@ -26,6 +27,7 @@ namespace h073_pushy
         {
             _pushy = new Pushy(this);
             _stageObjects = new List<StageObject>();
+            _inventoryObjects = new List<InventoryObject>();
             _balls = new List<Ball>();
             _parsers = new List<Parser>();
             _pushy.Teleport(startX, startY);
@@ -118,7 +120,12 @@ namespace h073_pushy
         
         private bool IsBlockedByWall(int x, int y)
         {
-            return _walls[x, y];
+            return IsStage(x, y) ? _walls[x, y] : true;
+        }
+
+        private bool IsStage(int x, int y)
+        {
+            return x >= 0 && y >= 0 && x < _width && y < _height;
         }
         
         public bool IsMovable(int x, int y)
@@ -193,6 +200,11 @@ namespace h073_pushy
                 _stageObjects[i].Draw(spriteBatch, gameTime);
             }
             
+            for (var i = _inventoryObjects.Count - 1; i >= 0; i--)
+            {
+                _inventoryObjects[i].Draw(spriteBatch, gameTime);
+            }
+            
             for (var i = _parsers.Count - 1; i >= 0; i--)
             {
                 _parsers[i].Draw(spriteBatch, gameTime);
@@ -207,6 +219,11 @@ namespace h073_pushy
             
             _pushy.Draw(spriteBatch, gameTime);
         }
-        
+
+        public void AddInventoryObject(InventoryObject inventoryObject)
+        {
+            inventoryObject.SetStage(this);
+            _inventoryObjects.Add(inventoryObject);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using h073_pushy.Items;
 using HxInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -38,6 +39,10 @@ namespace h073_pushy
             
             _stage.AddStageObject(door);
             _stage.AddStageObject(@switch);
+
+            var key = new InventoryObject(3, 3, new Key());
+
+            _stage.AddInventoryObject(key);
             
             base.Initialize();
         }
