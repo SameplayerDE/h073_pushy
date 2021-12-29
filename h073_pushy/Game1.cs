@@ -77,10 +77,11 @@ namespace h073_pushy
             EffectContentLoader.Instance.Find("gba").Parameters["ElapsedSeconds"]?.SetValue((float)gameTime.ElapsedGameTime.TotalSeconds);
             EffectContentLoader.Instance.Find("gba").Parameters["TotalSeconds"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
             EffectContentLoader.Instance.Find("gba").Parameters["TotalMilliseconds"]?.SetValue((float)gameTime.TotalGameTime.TotalMilliseconds);
-            
+
             base.Update(gameTime);
         }
-
+        
+        
         protected override void Draw(GameTime gameTime)
         {
             
@@ -91,7 +92,7 @@ namespace h073_pushy
 
             GraphicsDevice.Clear(new Color(32, 70, 49));
 
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: EffectContentLoader.Instance.Find("gba"));
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: EffectContentLoader.Instance.Find("default"));
             _stage.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             

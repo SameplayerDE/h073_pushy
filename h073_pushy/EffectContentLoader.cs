@@ -21,7 +21,7 @@ namespace h073_pushy
 
         public override void LoadContent(ContentManager contentManager)
         {
-            Add("default", contentManager, "default");
+            Add("default", contentManager, "default", true);
             Add("gba", contentManager, "GBA");
             Add("blur", contentManager, "Blur");
             Add("bloom", contentManager, "BloomExtract");
