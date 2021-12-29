@@ -71,8 +71,11 @@ namespace h073_pushy
                     if (_stage.GetStageObject(_position.X + x, _position.Y + y) is Door { IsOpen: false } door)
                     {
                         //IsDoor
-                        door.IsOpen = true;
-                        Inventory.Remove(_mainHandSlot);
+                        if (door.Open())
+                        {
+                            CutsceneManager.Set(Cutscene.DoorOpen);
+                            Inventory.Remove(_mainHandSlot);
+                        }
                     }
                 }
                 _mainHandSlot = -1;
@@ -144,12 +147,25 @@ namespace h073_pushy
         {
             _texture ??= TextureContentLoader.Instance.Find(_textureKey);
 
+            if (CutsceneManager.Current != null)
+            {
+                return;
+            }
+
             if (Input.Instance.IsKeyboardKeyDownOnce(Keys.D1))
             {
                 _mainHand = Inventory.Content[0];
                 if (_mainHand != null)
                 {
-                    _mainHandSlot = 0;
+                    if (_mainHandSlot == 0)
+                    {
+                        _mainHandSlot = -1;
+                        _mainHand = null;
+                    }
+                    else
+                    {
+                        _mainHandSlot = 0;
+                    }
                 }
             }
             if (Input.Instance.IsKeyboardKeyDownOnce(Keys.D2))
@@ -157,7 +173,15 @@ namespace h073_pushy
                 _mainHand = Inventory.Content[1];
                 if (_mainHand != null)
                 {
-                    _mainHandSlot = 1;
+                    if (_mainHandSlot == 1)
+                    {
+                        _mainHandSlot = -1;
+                        _mainHand = null;
+                    }
+                    else
+                    {
+                        _mainHandSlot = 1;
+                    }
                 }
             }
             if (Input.Instance.IsKeyboardKeyDownOnce(Keys.D3))
@@ -165,7 +189,15 @@ namespace h073_pushy
                 _mainHand = Inventory.Content[2];
                 if (_mainHand != null)
                 {
-                    _mainHandSlot = 2;
+                    if (_mainHandSlot == 2)
+                    {
+                        _mainHandSlot = -1;
+                        _mainHand = null;
+                    }
+                    else
+                    {
+                        _mainHandSlot = 2;
+                    }
                 }
             }
             

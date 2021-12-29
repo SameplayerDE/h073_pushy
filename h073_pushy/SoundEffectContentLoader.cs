@@ -21,6 +21,7 @@ namespace h073_pushy
         public override void LoadContent(ContentManager contentManager)
         {
             Add("pickup", contentManager, "sounds/pickup");
+            Add("open", contentManager, "sounds/open");
         }
     }
 }

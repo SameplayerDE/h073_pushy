@@ -1,4 +1,5 @@
-﻿using HxManager;
+﻿using HxGraphics;
+using HxManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,7 @@ namespace h073_pushy
         public override void LoadContent(ContentManager contentManager)
         {
             Add("missing", contentManager.Load<Texture2D>("missing"), true);
+            Add("p_w", Graphics.Instance.GenerateTexture2D(1, 1, Color.White));
             Add("pushy", contentManager.Load<Texture2D>("pushy"));
             Add("ball", contentManager.Load<Texture2D>("ball"));
             Add("wall", contentManager.Load<Texture2D>("wall"));
@@ -47,6 +49,12 @@ namespace h073_pushy
             {
                 Add($"laser_{i}", contentManager.Load<Texture2D>($"laser/laser_{i}"));
             }
+            
+            for (var i = 1; i <= 7; i++)
+            {
+                Add($"cutscene/door/door_{i}", contentManager, $"cutscene/door/door_{i}");
+            }
+            
         }
     }
 }

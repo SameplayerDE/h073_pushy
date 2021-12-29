@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using h073_pushy.Items;
 using HxInput;
+using HxSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -44,6 +45,8 @@ namespace h073_pushy
             
             _stage.AddStageObject(table);
             
+            Hx.Instance.Init(this, _graphics, Framework.DesktopGL);
+            
             base.Initialize();
         }
 
@@ -65,7 +68,8 @@ namespace h073_pushy
             {
                 return;
             }
-            Input.Instance.Update(gameTime);
+            
+            Hx.Instance.Update(gameTime);
 
             _stage.Update(gameTime);
 
@@ -73,6 +77,8 @@ namespace h073_pushy
             EffectContentLoader.Instance.Find("gba").Parameters["ElapsedSeconds"]?.SetValue((float)gameTime.ElapsedGameTime.TotalSeconds);
             EffectContentLoader.Instance.Find("gba").Parameters["TotalSeconds"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
             EffectContentLoader.Instance.Find("gba").Parameters["TotalMilliseconds"]?.SetValue((float)gameTime.TotalGameTime.TotalMilliseconds);
+            
+            CutsceneManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -115,7 +121,7 @@ namespace h073_pushy
                         Color.White);
                 }
             }
-
+            CutsceneManager.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
             base.Draw(gameTime);
