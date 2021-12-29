@@ -25,6 +25,24 @@
 /processorParam:TextureFormat=Color
 /build:ball.png
 
+#begin BloomExtract.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:BloomExtract.fx
+
+#begin Blur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Blur.fx
+
+#begin default.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:default.fx
+
 #begin door_closed.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -67,6 +85,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Font.spritefont
+
+#begin GBA.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:GBA.fx
 
 #begin house.png
 /importer:TextureImporter

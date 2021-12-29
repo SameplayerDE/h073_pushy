@@ -58,6 +58,7 @@ namespace h073_pushy
 
             TextureContentLoader.Instance.LoadContent(Content);
             SoundEffectContentLoader.Instance.LoadContent(Content);
+            EffectContentLoader.Instance.LoadContent(Content);
             
             base.LoadContent();
         }
@@ -72,6 +73,11 @@ namespace h073_pushy
 
             _stage.Update(gameTime);
 
+
+            EffectContentLoader.Instance.Find("gba").Parameters["ElapsedSeconds"]?.SetValue((float)gameTime.ElapsedGameTime.TotalSeconds);
+            EffectContentLoader.Instance.Find("gba").Parameters["TotalSeconds"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+            EffectContentLoader.Instance.Find("gba").Parameters["TotalMilliseconds"]?.SetValue((float)gameTime.TotalGameTime.TotalMilliseconds);
+            
             base.Update(gameTime);
         }
 
@@ -85,7 +91,7 @@ namespace h073_pushy
 
             GraphicsDevice.Clear(new Color(32, 70, 49));
 
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position), effect: EffectContentLoader.Instance.Find("gba"));
             _stage.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
