@@ -16,6 +16,8 @@ namespace h073_pushy
         private Direction _direction = Direction.Up;
         private Stage _stage = null;
 
+        public bool FixRotation = true; 
+
         public int X => _position.X;
         public int Y => _position.Y;
 
@@ -49,6 +51,16 @@ namespace h073_pushy
             if (_stage.IsBlocked(_position.X + x, _position.Y + y)) return;
             if (!_stage.IsMovable(_position.X + x, _position.Y + y))
             {
+                if (_stage.IsInventoryObject(_position.X + x, _position.Y + y))
+                {
+                    var item = _stage.GetInventoryObject(_position.X + x, _position.Y + y);
+                    if (item != null)
+                    {
+                        Inventory.Add(item.InventoryItem);
+                        _stage.RemoveInventoryObject(item);
+                        SoundEffectContentLoader.Instance.Find("pickup").Play();
+                    }
+                }
                 _position.X += x;
                 _position.Y += y;
             }
@@ -90,7 +102,7 @@ namespace h073_pushy
         
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(_texture, _position.ToVector2() * 32f, null, Color.White, _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_texture, _position.ToVector2() * 32f, null, Color.White, FixRotation ? 0f : _direction.ToRotation(), new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
         }
     }
 }

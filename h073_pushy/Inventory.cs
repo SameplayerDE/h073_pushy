@@ -13,7 +13,7 @@ namespace h073_pushy
 
         public int MaxSize => _maxSize;
         public IInventoryHolder InventoryHolder => _inventoryHolder;
-        public IEnumerable<InventoryItem> Content => _content;
+        public InventoryItem[] Content => _content;
 
         public Inventory(IInventoryHolder inventoryHolder = null, int maxSize = 3)
         {
@@ -37,7 +37,7 @@ namespace h073_pushy
         {
             var index = _maxSize;
 
-            for (var i = _maxSize; i >= 0; i--)
+            for (var i = _maxSize - 1; i >= 0; i--)
             {
                 //TODO empty item check and type check
                 if (_content[i] == null || _content[i] == item)

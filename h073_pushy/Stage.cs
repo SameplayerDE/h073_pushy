@@ -141,6 +141,32 @@ namespace h073_pushy
             return false;
         }
         
+        public bool IsInventoryObject(int x, int y)
+        {
+            for (var i = _inventoryObjects.Count - 1; i >= 0; i--)
+            {
+                if (_inventoryObjects[i].Position.X == x && _inventoryObjects[i].Position.Y == y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public InventoryObject GetInventoryObject(int x, int y)
+        {
+            for (var i = _inventoryObjects.Count - 1; i >= 0; i--)
+            {
+                if (_inventoryObjects[i].Position.X == x && _inventoryObjects[i].Position.Y == y)
+                {
+                    return _inventoryObjects[i];
+                }
+            }
+
+            return null;
+        }
+        
         public bool IsParser(int x, int y)
         {
             for (var i = _parsers.Count - 1; i >= 0; i--)
@@ -191,7 +217,7 @@ namespace h073_pushy
             {
                 for (int y = 0; y < _height; y++)
                 {
-                    spriteBatch.Draw(TextureContentLoader.Instance.Find(IsBlocked(x, y) ? "wall" : "floor"), new Vector2(x, y) * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(TextureContentLoader.Instance.Find(IsBlockedByWall(x, y) ? "wall" : "floor"), new Vector2(x, y) * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
                 }
             }
             
@@ -224,6 +250,11 @@ namespace h073_pushy
         {
             inventoryObject.SetStage(this);
             _inventoryObjects.Add(inventoryObject);
+        }
+
+        public void RemoveInventoryObject(InventoryObject item)
+        {
+            _inventoryObjects.Remove(item);
         }
     }
 }

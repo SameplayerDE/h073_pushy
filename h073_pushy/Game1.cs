@@ -43,6 +43,10 @@ namespace h073_pushy
             var key = new InventoryObject(3, 3, new Key());
 
             _stage.AddInventoryObject(key);
+
+            var table = new Table(1, 1);
+            
+            _stage.AddStageObject(table);
             
             base.Initialize();
         }
@@ -53,6 +57,7 @@ namespace h073_pushy
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             TextureContentLoader.Instance.LoadContent(Content);
+            SoundEffectContentLoader.Instance.LoadContent(Content);
             
             base.LoadContent();
         }
@@ -78,7 +83,7 @@ namespace h073_pushy
                 return;
             }
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(32, 70, 49));
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(_camera.Scale) * Matrix.CreateTranslation(-_camera.Position));
             _stage.Draw(_spriteBatch, gameTime);
@@ -88,9 +93,16 @@ namespace h073_pushy
             var scale = 4;
             for (var i = 0; i < _stage.Pushy.Inventory.MaxSize; i++)
             {
-                _spriteBatch.Draw(TextureContentLoader.Instance.Find("inventory_slot"), new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)), Color.White);
-                _spriteBatch.Draw(TextureContentLoader.Instance.Find("inventory_key"), new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)), Color.White);
+                _spriteBatch.Draw(TextureContentLoader.Instance.Find("inventory_slot"),
+                    new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)), Color.White);
+                if (_stage.Pushy.Inventory.Content[i] != null)
+                {
+                    _spriteBatch.Draw(TextureContentLoader.Instance.Find(_stage.Pushy.Inventory.Content[i].StageTexture),
+                        new Rectangle(new Point(16 * scale * i + 8, 8), new Point(16 * scale, 16 * scale)),
+                        Color.White);
+                }
             }
+
             _spriteBatch.End();
             
             base.Draw(gameTime);

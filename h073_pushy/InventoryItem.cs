@@ -1,4 +1,6 @@
-﻿namespace h073_pushy
+﻿using System.Drawing;
+
+namespace h073_pushy
 {
 
     public struct ItemAmountChangeResult
@@ -12,11 +14,16 @@
     public abstract class InventoryItem
     {
         protected string _displayname;
+        protected string _textureKey;
         protected int _amount;
-        protected readonly int _maxAmount = 1;
+        protected readonly int _maxAmount;
 
-        public InventoryItem(string displayname, int amount = 1, int maxAmount = 1)
+        public string InventoryTexture => _textureKey;
+        public string StageTexture => _textureKey.Replace("inventory_", "");
+
+        public InventoryItem(string displayname, int amount = 1, int maxAmount = 1, string textureKey = "")
         {
+            _textureKey = textureKey;
             _displayname = displayname;
             _amount = amount;
             _maxAmount = maxAmount;

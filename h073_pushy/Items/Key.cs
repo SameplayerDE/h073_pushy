@@ -2,7 +2,7 @@
 {
     public class Key : InventoryItem
     {
-        public Key() : base("Schlüssel", 1, 1)
+        public Key() : base("Schlüssel", 1, 1, "inventory_key")
         {
         }
     }

@@ -28,6 +28,8 @@ namespace h073_pushy
             Add("floor", contentManager.Load<Texture2D>("floor"));
             Add("parser", contentManager.Load<Texture2D>("parser"));
             Add("house", contentManager.Load<Texture2D>("house"));
+            Add("sign", contentManager.Load<Texture2D>("sign"));
+            Add("table", contentManager.Load<Texture2D>("table"));
             
             Add("door_open", contentManager.Load<Texture2D>("door_open"));
             Add("door_closed", contentManager.Load<Texture2D>("door_closed"));
@@ -37,7 +39,9 @@ namespace h073_pushy
             
             Add("inventory_slot", contentManager.Load<Texture2D>("inventory_slot"));
             Add("inventory_missing", contentManager.Load<Texture2D>("inventory_missing"));
+            
             Add("inventory_key", contentManager.Load<Texture2D>("inventory_key"));
+            Add("key", contentManager.Load<Texture2D>("key"));
 
             for (var i = 1; i <= 16; i++)
             {
