@@ -275,7 +275,7 @@ namespace h073_pushy
                 _balls[i].Draw(spriteBatch, gameTime);
             }
             
-            spriteBatch.Draw(TextureContentLoader.Instance.Request("house").Result, _end.ToVector2() * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TextureContentLoader.Instance.Request("down").Result, _end.ToVector2() * 32, null, Color.White, 0f, new Vector2(16, 16), 1f, SpriteEffects.None, 0f);
             
             
             _pushy.Draw(spriteBatch, gameTime);

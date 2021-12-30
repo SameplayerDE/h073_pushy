@@ -239,8 +239,8 @@ namespace h073_pushy
 
             if (_smooth)
             {
-                _position.X = MathHelper.Lerp(_position.X, _destination.X, 0.5f);
-                _position.Y = MathHelper.Lerp(_position.Y, _destination.Y, 0.5f);
+                _position.X = MathHelper.Lerp(_position.X, _destination.X, 0.1f);
+                _position.Y = MathHelper.Lerp(_position.Y, _destination.Y, 0.1f);
             }
         }
         

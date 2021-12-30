@@ -13,7 +13,7 @@ namespace h073_pushy
         private Texture2D _texture = null;
         private GenericRequest<Texture2D> _request;
         private Point _position;
-        private Color _color = Color.Red;
+        private Color _color = Color.White;
         
         private Direction _direction = Direction.Up;
 
