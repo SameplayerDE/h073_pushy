@@ -32,6 +32,7 @@ namespace h073_pushy
             Add("house", contentManager.Load<Texture2D>("house"));
             Add("sign", contentManager.Load<Texture2D>("sign"));
             Add("table", contentManager.Load<Texture2D>("table"));
+            Add("chest", contentManager.Load<Texture2D>("chest"));
             
             Add("door_open", contentManager.Load<Texture2D>("door_open"));
             Add("door_closed", contentManager.Load<Texture2D>("door_closed"));
@@ -44,15 +45,23 @@ namespace h073_pushy
             
             Add("inventory_key", contentManager.Load<Texture2D>("inventory_key"));
             Add("key", contentManager.Load<Texture2D>("key"));
+            Add("up", contentManager.Load<Texture2D>("up"));
+            Add("down", contentManager.Load<Texture2D>("down"));
+            Add("door_key", contentManager.Load<Texture2D>("door_key"));
 
             for (var i = 1; i <= 16; i++)
             {
                 Add($"laser_{i}", contentManager.Load<Texture2D>($"laser/laser_{i}"));
             }
             
-            for (var i = 1; i <= 7; i++)
+            for (var i = 1; i <= 4; i++)
             {
                 Add($"cutscene/door/door_{i}", contentManager, $"cutscene/door/door_{i}");
+            }
+            
+            for (var i = 1; i <= 4; i++)
+            {
+                Add($"cutscene/chest/chest_{i}", contentManager, $"cutscene/chest/chest_{i}");
             }
             
         }

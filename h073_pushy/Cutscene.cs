@@ -10,7 +10,8 @@ namespace h073_pushy
     public class Cutscene
     {
 
-        public static Cutscene DoorOpen = new Cutscene().AddRange("cutscene/door/door_", 1, 1).AddRange("cutscene/door/door_", 4, 4).AddRange("cutscene/door/door_", 7, 7);
+        public static Cutscene DoorOpen = new Cutscene().AddRange("cutscene/door/door_", 1, 3);
+        public static Cutscene ChestOpen = new Cutscene().AddRange("cutscene/chest/chest_", 1, 3);
         
         public List<string> Scenes;
         public int Index = 0;

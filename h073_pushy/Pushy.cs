@@ -70,11 +70,26 @@ namespace h073_pushy
                 {
                     if (_stage.GetStageObject(_position.X + x, _position.Y + y) is Door { IsOpen: false } door)
                     {
-                        //IsDoor
-                        if (door.Open())
+                        if (_mainHand is DoorKey)
                         {
-                            CutsceneManager.Set(Cutscene.DoorOpen);
-                            Inventory.Remove(_mainHandSlot);
+                            //IsDoor
+                            if (door.Open())
+                            {
+                                CutsceneManager.Set(Cutscene.DoorOpen);
+                                Inventory.Remove(_mainHandSlot);
+                            }
+                        }
+                    }
+                    if (_stage.GetStageObject(_position.X + x, _position.Y + y) is Chest { IsOpen: false } chest)
+                    {
+                        if (_mainHand is Key)
+                        {
+                            //IsDoor
+                            if (chest.Open(this))
+                            {
+                                CutsceneManager.Set(Cutscene.ChestOpen);
+                                Inventory.Remove(_mainHandSlot);
+                            }
                         }
                     }
                 }

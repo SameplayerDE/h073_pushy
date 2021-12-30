@@ -40,10 +40,19 @@ namespace h073_pushy
             var key = new InventoryObject(3, 12, new Key());
 
             _stage.AddInventoryObject(key);
+            
+            var key1 = new InventoryObject(3, 2, new DoorKey());
+
+            _stage.AddInventoryObject(key1);
 
             var table = new Table(1, 1);
             
             _stage.AddStageObject(table);
+            
+            var chest = new Chest(2, 11);
+            chest.SetContent(new DoorKey());
+            
+            _stage.AddStageObject(chest);
             
             Hx.Instance.Init(this, _graphics, Framework.DesktopGL);
             
